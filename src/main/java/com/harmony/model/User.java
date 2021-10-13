@@ -14,15 +14,22 @@ import java.util.Set;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(uniqueConstraints={@UniqueConstraint(columnNames={"username", "email"})})
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "username")
     private String username;
+
     private String password;
+
+    @Column(name = "email")
     private String email;
+
     private Byte[] image;
+
     private String description;
 
     @OneToMany(mappedBy = "user")
