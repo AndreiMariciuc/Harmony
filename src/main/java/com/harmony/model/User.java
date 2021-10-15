@@ -29,11 +29,27 @@ public class User {
     @ToString.Exclude
     private Set<UserGuild> userGuilds = new HashSet<>();
 
+    @OneToMany(mappedBy = "sender")
+    @ToString.Exclude
+    private Set<MessageRequest> sendRequests = new HashSet<>();
+
+    @OneToMany(mappedBy = "receiver")
+    @ToString.Exclude
+    private Set<MessageRequest> receiveRequests = new HashSet<>();
+
+    @OneToMany(mappedBy = "sender")
+    @ToString.Exclude
+    private Set<Message> sentMessages = new HashSet<>();
+
+    @OneToMany(mappedBy = "receiver")
+    @ToString.Exclude
+    private Set<Message> receivedMessages = new HashSet<>();
+
     @Override
     public boolean equals(Object o) {
+        if(!(o instanceof User user)) return false;
         if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        User user = (User) o;
+        if (Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
         return Objects.equals(id, user.id);
     }
 
