@@ -40,7 +40,7 @@ public class AccountController {
         try {
             userService.save(user);
         } catch (UserRegisterException e) {
-            return new AccountDto(e.getMessage(), null);
+            return new AccountDto(e.getMessage());
         }
 
         return new AccountDto();
@@ -53,14 +53,15 @@ public class AccountController {
 
     @PostMapping("/sign-in")
     @ResponseBody
-    public AccountDto signIn(@RequestBody UserDto user) {
+    public AccountDto signIn(@RequestBody UserDto user, HttpSession session) {
         UserDto byNameAndPassword;
         try {
             byNameAndPassword = userService.findByNameAndPassword(user);
+            session.setAttribute("userId", byNameAndPassword.getId());
         } catch (UserSignInException e) {
-            return new AccountDto(e.getMessage(), null);
+            return new AccountDto(e.getMessage());
         }
 
-        return new AccountDto(null, byNameAndPassword.getId());
+        return new AccountDto();
     }
 }

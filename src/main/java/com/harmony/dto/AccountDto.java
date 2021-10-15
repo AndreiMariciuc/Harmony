@@ -9,5 +9,4 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AccountDto {
     private String message;
-    private Long id;
 }

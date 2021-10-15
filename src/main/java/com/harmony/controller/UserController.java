@@ -7,8 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/user")
@@ -20,10 +21,11 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/{id}")
-    public String getHomeClient(@PathVariable("id") Long id, Model model) {
+    @GetMapping
+    public String getHomeClient(Model model, HttpSession session) {
         UserDto byId;
         try {
+            Long id = (Long) session.getAttribute("userId");
             byId = userService.findById(id);
         } catch (UserNotFoundException e) {
             return "404";

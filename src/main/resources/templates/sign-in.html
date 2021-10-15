@@ -39,7 +39,7 @@
         }).then(response => response.json())
             .then(accountDto => {
                 if (accountDto.message == null) {
-                    window.location = "/user/" + accountDto.id;
+                    window.location = "/user";
                 } else {
                     document.getElementById("error").innerHTML = accountDto.message;
                 }
