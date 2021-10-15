@@ -5,36 +5,46 @@
     <title>Sign-in</title>
 </head>
 <body>
-    <form method="POST" id="sign-in-user">
-        <label for="username">Username: </label>
-        <input type="text" id="username"/><br/>
-        <label for="password">Password: </label>
-        <input type="password" id="password"/><br/>
-        <button id="sign-in-btn">Sign-in</button>
-    </form>
+<form method="POST" id="sign-in-user">
+    <label for="username">Username: </label>
+    <input type="text" id="username"/><br/>
+    <label for="password">Password: </label>
+    <input type="password" id="password"/><br/>
+    <button id="sign-in-btn">Sign-in</button>
+</form>
+
+<div id="error">
+
+</div>
 
 <script>
     const btn = document.querySelector("#sign-in-btn");
-    btn.addEventListener("click", async  e => {
+    btn.addEventListener("click", async e => {
         e.preventDefault();
 
         const username = document.getElementById("username").value;
         const password = document.getElementById("password").value;
 
         const user = {
-            "username":username,
-            "password":password
+            "username": username,
+            "password": password
         };
 
-        const response = await fetch("/sign-in", {
-            method:"POST",
+        fetch("/sign-in", {
+            method: "POST",
             headers: {
-                'Content-Type':'application/json'
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(user)
-        });
+        }).then(response => response.json())
+            .then(accountDto => {
+                if (accountDto.message == null) {
+                    window.location = "/user/" + accountDto.id;
+                } else {
+                    document.getElementById("error").innerHTML = accountDto.message;
+                }
+            });
 
-        console.log(response.body.toString());
     })
 </script>
 </body>

@@ -1,24 +1,25 @@
 package com.harmony.controller;
 
-import com.harmony.exception.UserRegisterException;
-import com.harmony.exception.UserSignInException;
+import com.harmony.dto.AccountDto;
+import com.harmony.dto.UserDto;
+import com.harmony.exception.user.UserRegisterException;
+import com.harmony.exception.user.UserSignInException;
 import com.harmony.model.User;
 import com.harmony.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.function.EntityResponse;
+
+import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/")
-public class HomeController {
+public class AccountController {
     private final UserService userService;
 
     @Autowired
-    public HomeController(UserService userService) {
+    public AccountController(UserService userService) {
         this.userService = userService;
     }
 
@@ -34,18 +35,15 @@ public class HomeController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody User user) {
-        User saved = null;
-
+    @ResponseBody
+    public AccountDto register(@RequestBody UserDto user) {
         try {
-            saved = userService.save(user);
+            userService.save(user);
         } catch (UserRegisterException e) {
-            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE)
-                    .body(e.getMessage());
+            return new AccountDto(e.getMessage(), null);
         }
 
-        return ResponseEntity.status(HttpStatus.ACCEPTED)
-                .body(saved);
+        return new AccountDto();
     }
 
     @GetMapping("/sign-in")
@@ -54,15 +52,15 @@ public class HomeController {
     }
 
     @PostMapping("/sign-in")
-    public ResponseEntity<?> signIn(@RequestBody User user) {
+    @ResponseBody
+    public AccountDto signIn(@RequestBody UserDto user) {
+        UserDto byNameAndPassword;
         try {
-            userService.findByNameAndPassword(user);
+            byNameAndPassword = userService.findByNameAndPassword(user);
         } catch (UserSignInException e) {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT)
-                    .body(e.getMessage());
+            return new AccountDto(e.getMessage(), null);
         }
 
-        return ResponseEntity.status(HttpStatus.ACCEPTED)
-                .body(user);
+        return new AccountDto(null, byNameAndPassword.getId());
     }
 }

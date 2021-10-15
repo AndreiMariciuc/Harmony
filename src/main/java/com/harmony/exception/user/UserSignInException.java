@@ -1,4 +1,4 @@
-package com.harmony.exception;
+package com.harmony.exception.user;
 
 public class UserSignInException extends Exception {
     public UserSignInException(String message) {

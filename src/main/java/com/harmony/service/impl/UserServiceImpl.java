@@ -1,16 +1,16 @@
 package com.harmony.service.impl;
 
-import com.harmony.exception.UserRegisterException;
-import com.harmony.exception.UserSignInException;
+import com.harmony.dto.UserDto;
+import com.harmony.exception.user.UserNotFoundException;
+import com.harmony.exception.user.UserRegisterException;
+import com.harmony.exception.user.UserSignInException;
+import com.harmony.mapper.user.UserMapper;
 import com.harmony.model.User;
 import com.harmony.repository.UserRepository;
 import com.harmony.service.UserService;
-import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Optional;
 
 @Service
@@ -23,25 +23,32 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User save(User user) throws UserRegisterException {
-        User saved;
-
+    public void save(UserDto user) throws UserRegisterException {
         try {
-             saved = userRepository.save(user);
-        } catch (HibernateException e) {
+            userRepository.save(UserMapper.defaultReverseMapping(user));
+        } catch (RuntimeException e) {
             throw new UserRegisterException("You can not use this username or email");
         }
-
-        return saved;
     }
 
     @Override
-    public User findByNameAndPassword(User user) throws UserSignInException {
+    public UserDto findByNameAndPassword(UserDto user) throws UserSignInException {
         User userByNameAndPassword = userRepository.findUserByNameAndPassword(user.getUsername(), user.getPassword());
 
         if (userByNameAndPassword == null)
             throw new UserSignInException("username or password wrong!\n Try again!");
 
-        return user;
+        return UserMapper.defaultMapping(userByNameAndPassword);
+    }
+
+    @Override
+    public UserDto findById(Long id) throws UserNotFoundException {
+        Optional<User> byId = userRepository.findById(id);
+
+        if (byId.isEmpty()) {
+            throw new UserNotFoundException("User not found!");
+        }
+
+        return UserMapper.defaultMapping(byId.get());
     }
 }

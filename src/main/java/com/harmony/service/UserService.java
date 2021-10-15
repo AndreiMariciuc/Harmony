@@ -1,14 +1,14 @@
 package com.harmony.service;
 
-import com.harmony.exception.UserRegisterException;
-import com.harmony.exception.UserSignInException;
-import com.harmony.model.User;
-
-import java.util.Optional;
+import com.harmony.dto.UserDto;
+import com.harmony.exception.user.UserNotFoundException;
+import com.harmony.exception.user.UserRegisterException;
+import com.harmony.exception.user.UserSignInException;
 
 public interface UserService {
-    User save(User user) throws UserRegisterException;
+    void save(UserDto user) throws UserRegisterException;
 
-    User findByNameAndPassword(User user) throws UserSignInException;
+    UserDto findByNameAndPassword(UserDto user) throws UserSignInException;
 
+    UserDto findById(Long id) throws UserNotFoundException;
 }
