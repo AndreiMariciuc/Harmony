@@ -3,11 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title></title>
+
+    <script type="module" src="/webjars/sockjs-client/sockjs.js"></script>
+    <script type="module" src="/webjars/stomp-websocket/stomp.js"></script>
+    <script type="module" src="/js/app.js"></script>
 </head>
 <body>
 
-<span th:text = "${user.getUsername()}">
-</span>
+<div id="app">
+
+</div>
+
+<!--<span th:text = "${user.getUsername()}">-->
+<!--</span>-->
 
 </body>
 </html>
