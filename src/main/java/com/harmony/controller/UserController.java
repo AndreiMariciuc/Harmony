@@ -28,6 +28,7 @@ public class UserController {
             Long id = (Long) session.getAttribute("userId");
             byId = userService.findById(id);
         } catch (UserNotFoundException e) {
+            /// N-ar fi mai bine la login daca nu exista id?
             return "404";
         }
 

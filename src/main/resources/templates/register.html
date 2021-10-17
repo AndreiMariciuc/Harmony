@@ -44,14 +44,15 @@
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(user)
-        }).then(response => response.json())
-            .then(accountDto => {
-                if (accountDto.message == null) {
-                    window.location = "/sign-in";
-                } else {
-                    document.getElementById("error").innerHTML = accountDto.message;
-                }
-            });
+        })
+        .then(response => response.json())
+        .then(accountDto => {
+            if (accountDto.message == null) {
+                window.location = "/sign-in";
+            } else {
+                document.getElementById("error").innerHTML = accountDto.message;
+            }
+        });
     })
 </script>
 </body>

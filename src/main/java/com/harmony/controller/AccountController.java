@@ -30,6 +30,7 @@ public class AccountController {
 
     @GetMapping("/register")
     public String getRegister(Model model) {
+        /// De ce?
         model.addAttribute("registerForm", new User());
         return "register";
     }
