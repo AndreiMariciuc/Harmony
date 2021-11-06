@@ -35,18 +35,17 @@ public class AccountController {
         return "register";
     }
 
-//    @PostMapping("/register")
-//    @ResponseBody
-//    public AccountDto register(@RequestBody UserDto user) {
-//        System.out.println(user);
-//        try {
-//            userService.save(user);
-//        } catch (UserRegisterException e) {
-//            return new AccountDto(e.getMessage());
-//        }
-//
-//        return new AccountDto();
-//    }
+    @PostMapping("/register")
+    @ResponseBody
+    public AccountDto register(@RequestBody UserDto user) {
+        try {
+            userService.save(user);
+        } catch (UserRegisterException e) {
+            return new AccountDto(e.getMessage());
+        }
+
+        return new AccountDto();
+    }
 
     @GetMapping("/sign-in")
     public String getSignIn() {
