@@ -16,7 +16,6 @@ const app = createApp({
 
             socketManager.send('/user-info');
         });
-
     },
     methods: {
         onClick() {

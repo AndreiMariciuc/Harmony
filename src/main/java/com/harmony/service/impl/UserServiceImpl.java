@@ -11,7 +11,9 @@ import com.harmony.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -50,5 +52,12 @@ public class UserServiceImpl implements UserService {
         }
 
         return UserMapper.defaultMapping(byId.get());
+    }
+
+    @Override
+    public List<UserDto> findAllUsers(Long id, String likeUser) {
+        return userRepository.findAllUsers(id, likeUser).stream()
+                .map(UserMapper::defaultMapping)
+                .collect(Collectors.toList());
     }
 }

@@ -22,6 +22,10 @@ public class WebSocketController {
     @MessageMapping("/user-info")
     @SendToUser("/topic/user-info")
     public UserDto test(SimpMessageHeaderAccessor headerAccessor) {
+        Object userId1 = headerAccessor.getSessionAttributes().get("userId");
+
+        System.out.println(userId1);
+
         var session = (HttpSession) headerAccessor.getSessionAttributes().get("session");
         var userId = (Long) session.getAttribute("userId");
         System.out.println(session.getAttribute("userId"));
