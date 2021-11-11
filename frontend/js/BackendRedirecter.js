@@ -38,6 +38,10 @@ class BackendRedirecter {
 	async post(path, data) {
 		return await handleRequest(path, 'post', data, null);
 	}
+
+	async delete(path, data) {
+		return await handleRequest(path, 'delete', data, null);
+	}
 }
 
 export default BackendRedirecter;

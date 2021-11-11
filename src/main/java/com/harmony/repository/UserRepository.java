@@ -17,6 +17,7 @@ public interface UserRepository extends CrudRepository<User, Long> {
             " or msreq.receiver.id = :id AND msreq.sender.id = u.id)")
     List<User> findAllUsers(@Param("id") Long id, @Param("likeUser") String likeUser);
 
-    @Query("SELECT u FROM  User u LEFT JOIN MessageRequest msreq ON u.id = msreq.receiver.id WHERE u.id = :id AND msreq.accepted = false")
+    @Query("SELECT msreq.sender FROM  User u LEFT JOIN MessageRequest msreq ON u.id = msreq.receiver.id " +
+            "WHERE u.id = :id AND msreq.accepted = false")
     List<User> findPendingRequests(@Param("id") Long id);
 }

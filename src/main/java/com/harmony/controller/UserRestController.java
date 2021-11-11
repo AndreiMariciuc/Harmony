@@ -43,4 +43,5 @@ public class UserRestController {
     public List<UserDto> getAllUsers(@PathVariable(value = "id") Long id) {
         return userService.findPendingRequests(id);
     }
+
 }
