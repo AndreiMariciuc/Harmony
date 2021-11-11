@@ -33,8 +33,9 @@ public class UserRestController {
         return new ResponseDto(error, user);
     }
 
-    @GetMapping("/all/{id}")
-    public List<UserDto> getAllUsers(@PathVariable("id") Long id, @RequestParam(defaultValue = "") String likeUser) {
+    @GetMapping("/all")
+    public List<UserDto> getAllUsers(@RequestParam(value = "id", defaultValue = "-1") Long id,
+                                     @RequestParam(defaultValue = "") String likeUser) {
         return userService.findAllUsers(id, likeUser);
     }
 }
