@@ -2,6 +2,7 @@ package com.harmony.controller;
 
 import com.harmony.dto.ResponseDto;
 import com.harmony.dto.UserDto;
+import com.harmony.service.MessageRequestService;
 import com.harmony.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,10 +14,12 @@ import java.util.List;
 @RequestMapping("/users")
 public class UserRestController {
     private final UserService userService;
+    private final MessageRequestService messageRequestService;
 
     @Autowired
-    public UserRestController(UserService userService) {
+    public UserRestController(UserService userService, MessageRequestService messageRequestService) {
         this.userService = userService;
+        this.messageRequestService = messageRequestService;
     }
 
     @GetMapping("/{id}")
@@ -40,8 +43,20 @@ public class UserRestController {
     }
 
     @GetMapping("/{id}/requests")
-    public List<UserDto> getAllUsers(@PathVariable(value = "id") Long id) {
+    public List<UserDto> getAllRequests(@PathVariable(value = "id") Long id) {
         return userService.findPendingRequests(id);
     }
 
+    @DeleteMapping("/reject")
+    public ResponseDto rejectRequest(@RequestParam("receiverId") Long receiverId, @RequestParam("senderId")Long senderId) {
+        String error = null;
+
+        try {
+            messageRequestService.rejectRequest(receiverId, senderId);
+        } catch (Exception e) {
+            error = e.getMessage();
+        }
+
+        return new ResponseDto(error, null);
+    }
 }

@@ -40,7 +40,7 @@ class BackendRedirecter {
 	}
 
 	async delete(path, data) {
-		return await handleRequest(path, 'delete', data, null);
+		return await handleRequest(path, 'delete', null, data);
 	}
 }
 
