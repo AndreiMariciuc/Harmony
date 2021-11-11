@@ -15,9 +15,24 @@ function initSocketServer(httpServer) {
 function socketLogic(socket) {
 	const session = socket.request.session;
 
-	socket.on('user-info', async (id, cb) => {
+	socket.on('users', async (id, cb) => {
 		if (id == null) id = session.userId;
 		const [err, data] = await backend.get(`/users/${id}`);
+		cb(data);
+	});
+
+	socket.on('users/all', async (id, likeUser, cb) => {
+		if (id == null) id = session.userId;
+		const [err, data] = await backend.get(`/users/all`, {
+			id: id,
+			likeUser: likeUser,
+		});
+		cb(data);
+	});
+
+	socket.on('users/requests', async (id, cb) => {
+		if (id == null) id = session.userId;
+		const [err, data] = await backend.get(`/users/${id}/requests`);
 		cb(data);
 	});
 

@@ -38,4 +38,9 @@ public class UserRestController {
                                      @RequestParam(defaultValue = "") String likeUser) {
         return userService.findAllUsers(id, likeUser);
     }
+
+    @GetMapping("/{id}/requests")
+    public List<UserDto> getAllUsers(@PathVariable(value = "id") Long id) {
+        return userService.findPendingRequests(id);
+    }
 }
