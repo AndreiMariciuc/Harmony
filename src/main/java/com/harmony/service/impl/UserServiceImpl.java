@@ -60,4 +60,11 @@ public class UserServiceImpl implements UserService {
                 .map(UserMapper::defaultMapping)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<UserDto> findPendingRequests(Long id) {
+        return userRepository.findPendingRequests(id).stream()
+                .map(UserMapper::defaultMapping)
+                .collect(Collectors.toList());
+    }
 }

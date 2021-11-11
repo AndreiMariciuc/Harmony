@@ -15,4 +15,6 @@ public interface UserService {
     UserDto findById(Long id) throws UserNotFoundException;
 
     List<UserDto> findAllUsers(Long id, String likeUser);
+
+    List<UserDto> findPendingRequests(Long id);
 }
