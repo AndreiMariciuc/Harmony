@@ -1,0 +1,34 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+html,
+body {
+	width: 100%;
+	height: 100%;
+}
+
+#app {
+	display: flex;
+	flex-direction: row;
+
+	width: 100%;
+	height: 100%;
+}
+
+.users {
+	flex: 1 1 25%;
+	background-color: red;
+}
+
+.messaging {
+	flex: 1 1 50%;
+	background-color: yellow;
+}
+
+.friends {
+	flex: 1 1 25%;
+	background-color: blue;
+}
