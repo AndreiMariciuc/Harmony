@@ -19,13 +19,10 @@ const app = createApp({
         });
     },
     methods: {
-        onClick() {
-        },
     },
     template: `
+        <div class="messaging"></div>
         <users class="users" :socket="socket"></users>
-		<div class="messaging"></div>
-		<friends class="friends" :socket="socket"></friends>
     `,
 });
 
