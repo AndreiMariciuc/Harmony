@@ -3,43 +3,60 @@ import createTemplate from '../../js/createTemplate.js';
 const template = await createTemplate('friends');
 
 const component = {
-	template: template,
+    template: template,
     props: ['socket'],
     data() {
         return {
-            userList: [],
+            pendingUsersList: [],
+            friendsList: []
         };
     },
     mounted() {
-        this.fetchUsers();
+        this.socket.on('/fetch-friends', _ => {
+            this.getFriends();
+        });
+
+        this.getPendingUsers();
+        this.getFriends();
     },
     methods: {
-        fetchUsers() {
-            this.socket.emit('users/requests', { id: null }, response => {
-                if(response.error) {
-                    console.log(response.error);
+        getPendingUsers() {
+            this.socket.emit('users/requests', {id: null}, response => {
+                if (response.error) {
+                    return console.log(response.error);
                 }
 
-                this.userList = response.data;
+                this.pendingUsersList = response.data;
             });
         },
         rejectUser(id) {
-            this.socket.emit("users/reject", { receiverId: null, senderId: id }, response => {
-                if(response.error) {
-                    console.log(response.error);
+            this.socket.emit("users/reject", {receiverId: null, senderId: id}, response => {
+                if (response.error) {
+                    return console.log(response.error);
                 }
 
-                this.fetchUsers();
+                this.getPendingUsers();
+                this.getFriends();
             });
         },
         acceptUser(id) {
-            this.socket.emit("users/accept", { receiverId: null, senderId: id }, response => {
-                if(response.error) {
-                    console.log(response.error);
+            this.socket.emit("users/accept", {receiverId: null, senderId: id}, response => {
+                if (response.error) {
+                    return console.log(response.error);
                 }
 
-                this.fetchUsers();
+                this.getPendingUsers();
+                this.getFriends();
             });
+        },
+        getFriends() {
+            this.socket.emit("users/friends", {id: null}, response => {
+                if (response.error) {
+                    return console.log(response.error);
+                }
+
+                this.friendsList = response.data;
+            })
         }
     },
 };

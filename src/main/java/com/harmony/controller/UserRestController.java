@@ -74,8 +74,8 @@ public class UserRestController {
         return new ResponseDto(error, null);
     }
 
-    @GetMapping("/friends")
-    public ResponseDto getAllFriends(@RequestParam Long id) {
+    @GetMapping("/{id}/friends")
+    public ResponseDto getAllFriends(@PathVariable Long id) {
         return new ResponseDto(null, userService.findFriends(id));
     }
 }

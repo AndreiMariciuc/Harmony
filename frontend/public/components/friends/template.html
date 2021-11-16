@@ -1,7 +1,11 @@
 <div>
-    <div v-for="user in userList" :key="user.id">
+    <div v-for="user in pendingUsersList" :key="user.id">
             <p>{{ user.username }}</p>
             <button @click="rejectUser(user.id)">Reject</button>
             <button @click="acceptUser(user.id)">Accept</button>
+    </div>
+    <hr>
+    <div v-for="user in friendsList" :key="user.id">
+        <p>{{ user.username }}</p>
     </div>
 </div>
