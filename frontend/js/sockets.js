@@ -1,5 +1,6 @@
 import { Server as SocketServer } from 'socket.io';
 import BackendRedirecter from './BackendRedirecter.js';
+import loadComponent from './loadComponent.js';
 
 const backend = new BackendRedirecter();
 
@@ -19,6 +20,11 @@ function socketLogic(socket) {
 	socket.on('users', async (id, cb) => {
 		if (id == null) id = session.userId;
 		const [err, data] = await backend.get(`/users/${id}`);
+		cb(data);
+	});
+
+	socket.on('get-component', async (component, cb) => {
+		const data = await loadComponent(component);
 		cb(data);
 	});
 
