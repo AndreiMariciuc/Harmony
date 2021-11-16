@@ -11,8 +11,7 @@ import com.harmony.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -64,6 +63,20 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserDto> findPendingRequests(Long id) {
         return userRepository.findPendingRequests(id).stream()
+                .map(UserMapper::defaultMapping)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<UserDto> findFriends(Long id) {
+        List<User> senderFriends = userRepository.findSenderFriends(id);
+        List<User> receiverFriends = userRepository.findReceiverFriends(id);
+
+        Set<User> union = new HashSet<>();
+        union.addAll(senderFriends);
+        union.addAll(receiverFriends);
+
+        return union.stream()
                 .map(UserMapper::defaultMapping)
                 .collect(Collectors.toList());
     }

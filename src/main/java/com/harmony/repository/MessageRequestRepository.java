@@ -7,7 +7,7 @@ import org.springframework.data.repository.query.Param;
 
 public interface MessageRequestRepository extends CrudRepository<MessageRequest, Long> {
     @Query("SELECT msreq FROM MessageRequest msreq " +
-            "WHERE msreq.receiver.id = :receiverId AND msreq.sender.id = :senderId")
+            "WHERE msreq.receiver.id = :receiverId AND msreq.sender.id = :senderId AND msreq.accepted = false")
     MessageRequest getRequestByIds(@Param("receiverId") Long receiverId,
                                    @Param("senderId") Long senderId);
 }

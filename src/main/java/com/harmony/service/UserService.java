@@ -17,4 +17,6 @@ public interface UserService {
     List<UserDto> findAllUsers(Long id, String likeUser);
 
     List<UserDto> findPendingRequests(Long id);
+
+    List<UserDto> findFriends(Long id);
 }

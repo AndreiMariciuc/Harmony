@@ -48,7 +48,8 @@ public class UserRestController {
     }
 
     @DeleteMapping("/reject")
-    public ResponseDto rejectRequest(@RequestParam("receiverId") Long receiverId, @RequestParam("senderId")Long senderId) {
+    public ResponseDto rejectRequest(@RequestParam("receiverId") Long receiverId,
+                                     @RequestParam("senderId") Long senderId) {
         String error = null;
 
         try {
@@ -58,5 +59,10 @@ public class UserRestController {
         }
 
         return new ResponseDto(error, null);
+    }
+
+    @GetMapping("/friends")
+    public ResponseDto getAllFriends(@RequestParam Long id) {
+        return new ResponseDto(null, userService.findFriends(id));
     }
 }
