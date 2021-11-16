@@ -10,6 +10,7 @@ const app = createApp({
     mounted() {
         socketManager.connect(_ => {
             socketManager.on('/user/topic/user-info', data => {
+                console.log(data);
                 this.user = JSON.parse(data.body);
                 console.log(this.user);
             });

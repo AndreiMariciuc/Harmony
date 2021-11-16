@@ -37,14 +37,14 @@ public class UserRestController {
     }
 
     @GetMapping("/all")
-    public List<UserDto> getAllUsers(@RequestParam(value = "id", defaultValue = "-1") Long id,
+    public ResponseDto getAllUsers(@RequestParam(value = "id", defaultValue = "-1") Long id,
                                      @RequestParam(defaultValue = "") String likeUser) {
-        return userService.findAllUsers(id, likeUser);
+        return new ResponseDto(null, userService.findAllUsers(id, likeUser));
     }
 
     @GetMapping("/{id}/requests")
-    public List<UserDto> getAllRequests(@PathVariable(value = "id") Long id) {
-        return userService.findPendingRequests(id);
+    public ResponseDto getAllRequests(@PathVariable(value = "id") Long id) {
+        return new ResponseDto(null, userService.findPendingRequests(id));
     }
 
     @DeleteMapping("/reject")
@@ -54,6 +54,19 @@ public class UserRestController {
 
         try {
             messageRequestService.rejectRequest(receiverId, senderId);
+        } catch (Exception e) {
+            error = e.getMessage();
+        }
+
+        return new ResponseDto(error, null);
+    }
+
+    @PutMapping("/accept")
+    public ResponseDto acceptRequest(@RequestParam("receiverId") Long receiverId, @RequestParam("senderId")Long senderId) {
+        String error = null;
+
+        try {
+            messageRequestService.acceptRequest(receiverId, senderId);
         } catch (Exception e) {
             error = e.getMessage();
         }

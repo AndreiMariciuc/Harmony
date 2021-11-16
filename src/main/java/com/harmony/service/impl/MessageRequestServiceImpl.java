@@ -21,4 +21,11 @@ public class MessageRequestServiceImpl implements MessageRequestService {
         if(request == null) throw new RequestNotFoundException("Request not found!");
         messageRequestRepository.delete(request);
     }
+
+    @Override
+    public void acceptRequest(Long receiverId, Long senderId) throws Exception {
+        var request = messageRequestRepository.getRequestByIds(receiverId, senderId);
+        request.setAccepted(true);
+        messageRequestRepository.save(request);
+    }
 }
