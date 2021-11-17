@@ -35,12 +35,6 @@ app.component('friends', friends);
 import test from '../components/test/test.js';
 app.component('test', test);
 
-// socket.emit('get-component', 'test', data => {
-// 	app.component('test', data);
-// 	console.log(data);
-// 	app.mount('#app');
-// });
-
 app.mount('#app');
 
 console.log('it works!');
