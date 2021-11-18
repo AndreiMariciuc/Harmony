@@ -78,4 +78,17 @@ public class UserRestController {
     public ResponseDto getAllFriends(@PathVariable Long id) {
         return new ResponseDto(null, userService.findFriends(id));
     }
+
+    @PostMapping("/{id}/friends/{friendId}")
+    public ResponseDto sendFriendRequest(@PathVariable Long id, @PathVariable Long friendId) {
+        String error = null;
+
+        try {
+            userService.sendFriendRequest(id, friendId);
+        } catch (Exception e) {
+            error = e.getMessage();
+        }
+
+        return new ResponseDto(error, null);
+    }
 }

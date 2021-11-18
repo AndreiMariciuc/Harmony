@@ -19,4 +19,6 @@ public interface UserService {
     List<UserDto> findPendingRequests(Long id);
 
     List<UserDto> findFriends(Long id);
+
+    void sendFriendRequest(Long senderId, Long receiverId) throws Exception;
 }

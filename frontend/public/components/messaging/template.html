@@ -1,0 +1,19 @@
+<div v-if="activeConversation">
+    <div class="header">
+        <p>{{ conversationName }}</p>
+    </div>
+    <div class="body">
+        <div v-for="(msg, i) in messages" :key="i">
+            <p>{{ msg.sender.username }}</p>
+            <p>{{ msg.message }}</p>
+        </div>
+    </div>
+    <div class="footer">
+        <input v-model="message" placeholder="Write a message here!" @keyup.enter="sendMessage"/>
+    </div>
+</div>
+
+<div v-else class="helpful">
+    {{ helpfulMessage }}
+</div>
+

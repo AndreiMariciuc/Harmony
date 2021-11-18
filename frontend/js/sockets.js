@@ -53,7 +53,7 @@ function socketLogic(socket) {
         });
         cb(data);
 
-        socket.to(session.userId).emit('/fetch-friends');
+        socket.to(session.userId).to(senderId).emit('fetch-friends');
     });
 
     socket.on('users/accept', async ({receiverId, senderId}, cb) => {
@@ -66,13 +66,46 @@ function socketLogic(socket) {
             }
         });
         cb(data);
+
+        socket.to(session.userId).to(senderId).emit('fetch-friends');
     });
 
     socket.on('users/friends', async ({id}, cb) => {
         if (id == null) id = session.userId;
         const [err, data] = await backend.get(`/users/${id}/friends`);
         cb(data);
-    })
+    });
+
+    socket.on('users/friends/add', async ({id, friendId}, cb) => {
+        if (id == null) id = session.userId;
+        const [err, data] = await backend.post(`/users/${id}/friends/${friendId}`);
+        cb(data);
+
+        socket.to(session.userId).to(friendId).emit('fetch-friends');
+    });
+
+    socket.on('get-messages', async ({ conversation }, cb) => {
+        if(conversation == null) return;
+
+        const id = session.userId;
+        const [err, data] = await backend.get(`/messages/${id}/@me/${conversation.id}`);
+        console.log(err);
+        console.log(data);
+        cb(data);
+    });
+
+    socket.on('send-private-message', async ({ friendId, msg }, cb) => {
+        if(!friendId || !msg) return;
+
+        const id = session.userId;
+        console.log(msg)
+        const [err, data] = await backend.post(`/messages/${id}/@me/${friendId}`, { message: msg });
+        console.log(data);
+        cb(data);
+
+        if(!data?.data) return;
+        socket.to(session.userId).to(friendId).emit('private-message', data.data);
+    });
 
     socket.on('disconnect', _ => {
         console.log(`User ${session.userId} has disconnected!`);

@@ -5,7 +5,9 @@ import com.harmony.exception.user.UserNotFoundException;
 import com.harmony.exception.user.UserRegisterException;
 import com.harmony.exception.user.UserSignInException;
 import com.harmony.mapper.user.UserMapper;
+import com.harmony.model.MessageRequest;
 import com.harmony.model.User;
+import com.harmony.repository.MessageRequestRepository;
 import com.harmony.repository.UserRepository;
 import com.harmony.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +19,12 @@ import java.util.stream.Collectors;
 @Service
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
+    private final MessageRequestRepository messageRequestRepository;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, MessageRequestRepository messageRequestRepository) {
         this.userRepository = userRepository;
+        this.messageRequestRepository = messageRequestRepository;
     }
 
     @Override
@@ -79,5 +83,18 @@ public class UserServiceImpl implements UserService {
         return union.stream()
                 .map(UserMapper::defaultMapping)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void sendFriendRequest(Long senderId, Long receiverId) throws Exception {
+        var sender = userRepository.findById(senderId).orElse(null);
+        var receiver = userRepository.findById(receiverId).orElse(null);
+
+        if(sender == null || receiver == null) {
+            throw new Exception("A specified does not exist!");
+        }
+
+        var request = new MessageRequest(null, sender, receiver, false);
+        messageRequestRepository.save(request);
     }
 }

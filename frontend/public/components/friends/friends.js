@@ -5,6 +5,7 @@ const template = await createTemplate('friends');
 const component = {
     template: template,
     props: ['socket'],
+    emits: ['user-selected'],
     data() {
         return {
             pendingUsersList: [],
@@ -12,8 +13,9 @@ const component = {
         };
     },
     mounted() {
-        this.socket.on('/fetch-friends', _ => {
+        this.socket.on('fetch-friends', _ => {
             this.getFriends();
+            this.getPendingUsers();
         });
 
         this.getPendingUsers();
@@ -57,6 +59,9 @@ const component = {
 
                 this.friendsList = response.data;
             })
+        },
+        selectUser(user) {
+            this.$parent.$emit("user-selected", { isUser: true, ...user });
         }
     },
 };
