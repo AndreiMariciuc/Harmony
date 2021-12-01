@@ -12,6 +12,10 @@ const component = {
         };
     },
     mounted() {
+        this.socket.on('fetch-friends', _ => {
+            this.fetchUsers();
+        });
+
         this.fetchUsers();
     },
     watch: {
@@ -29,6 +33,13 @@ const component = {
                 this.userList = response.data;
             });
         },
+        sendFriendRequest(id) {
+            this.socket.emit('users/friends/add', { id: null, friendId: id }, response => {
+                if(response.error) {
+                    console.log(response.error);
+                }
+            });
+        }
     },
 };
 

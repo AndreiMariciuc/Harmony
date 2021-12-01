@@ -2,5 +2,6 @@
     <input v-model="likeUser" placeholder="Scrie un nume !"/>
     <div v-for="user in userList" :key="user.id">
         <p>{{ user.username }}</p>
+        <button @click="sendFriendRequest(user.id)">Add friend!</button>
     </div>
 </div>

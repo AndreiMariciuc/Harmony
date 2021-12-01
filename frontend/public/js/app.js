@@ -7,6 +7,7 @@ const app = createApp({
         return {
             user: null,
             socket: socket,
+            activeConversation: null,
         };
     },
     mounted() {
@@ -19,10 +20,14 @@ const app = createApp({
         });
     },
     methods: {
+        handleUserSelected(conversation) {
+            console.log(conversation);
+            this.activeConversation = conversation;
+        }
     },
     template: `
-        <div class="messaging"></div>
-        <users class="users" :socket="socket"></users>
+        <messaging class="messaging" :socket="socket" :conversation="activeConversation"></messaging>
+        <users class="users" :socket="socket" @user-selected="handleUserSelected"></users>
     `,
 });
 
@@ -32,8 +37,8 @@ app.component('users', users);
 import friends from '../components/friends/friends.js';
 app.component('friends', friends);
 
-import test from '../components/test/test.js';
-app.component('test', test);
+import messaging from '../components/messaging/messaging.js';
+app.component('messaging', messaging);
 
 app.mount('#app');
 
