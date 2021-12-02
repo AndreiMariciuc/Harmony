@@ -14,8 +14,16 @@ public class MessageMapper {
         if (message.getChannel() != null)
             messageDto.setChannelId(message.getChannel().getId());
         messageDto.setMessage(message.getMessage());
+        messageDto.setDate(message.getDate());
 
         return messageDto;
+    }
+
+    public static Message sendMessageReverseMapping(MessageDto messageDto) {
+        Message message = new Message();
+        message.setDate(messageDto.getDate());
+        message.setMessage(messageDto.getMessage());
+        return message;
     }
 
     public static Message defaultReverseMapping(MessageDto messageDto) {
@@ -26,6 +34,7 @@ public class MessageMapper {
         message.setReceiver(UserMapper.defaultReverseMapping(messageDto.getReceiver()));
         // TODO: channel
         message.setMessage(messageDto.getMessage());
+        message.setDate(messageDto.getDate());
 
         return message;
     }

@@ -94,12 +94,12 @@ function socketLogic(socket) {
         cb(data);
     });
 
-    socket.on('send-private-message', async ({ friendId, msg }, cb) => {
+    socket.on('send-private-message', async ({ friendId, msg}, cb) => {
         if(!friendId || !msg) return;
 
         const id = session.userId;
         console.log(msg)
-        const [err, data] = await backend.post(`/messages/${id}/@me/${friendId}`, { message: msg });
+        const [err, data] = await backend.post(`/messages/${id}/@me/${friendId}`, msg);
         console.log(data);
         cb(data);
 

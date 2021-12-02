@@ -21,7 +21,7 @@ const component = {
     },
     computed: {
         conversationName() {
-            if(this.activeConversation.isUser) {
+            if (this.activeConversation.isUser) {
                 return this.activeConversation.username;
             }
 
@@ -36,24 +36,27 @@ const component = {
     },
     methods: {
         getMessages() {
-            this.socket.emit('get-messages', { conversation: this.activeConversation }, response => {
-                if(response.error) {
+            this.socket.emit('get-messages', {conversation: this.activeConversation}, response => {
+                if (response.error) {
                     return console.log(response.error);
                 }
-    
+
                 this.messages = response.data.reverse();
-            }); 
+            });
         },
         sendMessage() {
-            this.socket.emit('send-private-message', { friendId: this.activeConversation.id, msg: this.message }, response => {
+            this.socket.emit('send-private-message', {
+                friendId: this.activeConversation.id,
+                msg: {message: this.message}
+            }, response => {
                 console.log(response)
-                if(response.error) {
+                if (response.error) {
                     return console.log(response.error);
                 }
-    
+
                 console.log(this.messages);
                 this.messages.push(response.data);
-            }); 
+            });
             this.message = "";
         }
     },

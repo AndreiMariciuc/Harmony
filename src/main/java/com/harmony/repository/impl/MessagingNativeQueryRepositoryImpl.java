@@ -18,12 +18,11 @@ public class MessagingNativeQueryRepositoryImpl implements MessagingNativeQueryR
 
 
     @Override
-    public List getPrivateMessages(Long user1Id, Long user2Id, int startMessageIndex, int pageSize) {
-        System.out.println("daaaaaaaaaaaaa");
+    public List<Message> getPrivateMessages(Long user1Id, Long user2Id, int startMessageIndex, int pageSize) {
         Query query = entityManager.createQuery("SELECT msg FROM Message msg " +
                 "WHERE msg.toGuild = false AND " +
                 "(msg.receiver.id = :user1Id AND msg.sender.id = :user2Id OR msg.receiver.id = :user2Id AND msg.sender.id = :user1Id) " +
-                "ORDER BY msg.id DESC");
+                "ORDER BY msg.id DESC", Message.class);
 
         query.setFirstResult(startMessageIndex);
         query.setMaxResults(pageSize);
@@ -35,10 +34,7 @@ public class MessagingNativeQueryRepositoryImpl implements MessagingNativeQueryR
         System.out.println(query.getParameters());
         System.out.println(query.getResultList());
 
-        return (List) query.getResultList().stream().map(x -> {
-            var msg = (Message) x;
-            return MessageMapper.defaultMapping(msg);
-        }).collect(Collectors.toList());
+        return query.getResultList();
 //        return null;
     }
 }

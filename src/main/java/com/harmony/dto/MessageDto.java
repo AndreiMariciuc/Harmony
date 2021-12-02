@@ -1,9 +1,10 @@
 package com.harmony.dto;
 
-import com.harmony.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Date;
 
 @Data
 @AllArgsConstructor
@@ -19,4 +20,5 @@ public class MessageDto {
     private Long channelId;
 
     private String message;
+    private Date date;
 }
