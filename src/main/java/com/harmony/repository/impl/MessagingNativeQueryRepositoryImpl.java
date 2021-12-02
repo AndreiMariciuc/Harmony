@@ -19,7 +19,6 @@ public class MessagingNativeQueryRepositoryImpl implements MessagingNativeQueryR
 
     @Override
     public List getPrivateMessages(Long user1Id, Long user2Id, int startMessageIndex, int pageSize) {
-        System.out.println("daaaaaaaaaaaaa");
         Query query = entityManager.createQuery("SELECT msg FROM Message msg " +
                 "WHERE msg.toGuild = false AND " +
                 "(msg.receiver.id = :user1Id AND msg.sender.id = :user2Id OR msg.receiver.id = :user2Id AND msg.sender.id = :user1Id) " +
