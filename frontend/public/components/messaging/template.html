@@ -5,7 +5,7 @@
     <div class="body">
         <div v-for="(msg, i) in messages" :key="i">
             <p>{{ msg.sender.username }}</p>
-            <p>{{ msg.message }}</p>
+            <p>{{ msg.message}}, {{msg.date}}</p>
         </div>
     </div>
     <div class="footer">

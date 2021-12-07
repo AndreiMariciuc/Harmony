@@ -15,6 +15,7 @@ function initSocketServer(httpServer) {
 }
 
 function socketLogic(socket) {
+
 	const session = socket.request.session;
 
 	socket.join(session.userId);

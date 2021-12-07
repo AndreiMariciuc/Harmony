@@ -42,20 +42,18 @@ public class MessagingRestController {
     }
 
     @PostMapping("/{user1Id}/@me/{user2Id}")
-    public ResponseDto sendPrivateMessages(@PathVariable Long user1Id, @PathVariable Long user2Id, @RequestBody Map<String, Object> body) {
+    public ResponseDto sendPrivateMessages(@PathVariable Long user1Id, @PathVariable Long user2Id, @RequestBody MessageDto messageDto) {
         String error = null;
-        MessageDto data = null;
-
-        var message = (String) body.get("message");
-        System.out.println(message);
+        MessageDto frontendMessage = null;
 
         try {
-            data = MessageMapper.defaultMapping(messagingService.sendPrivateMessage(user1Id, user2Id, message));
+            Message message = MessageMapper.sendMessageReverseMapping(messageDto);
+            frontendMessage = MessageMapper.defaultMapping(messagingService.sendPrivateMessage(user1Id, user2Id, message));
         } catch (Exception e) {
             error = e.getMessage();
         }
 
-        return new ResponseDto(error, data);
+        return new ResponseDto(error, frontendMessage);
     }
 
     @GetMapping("/{userId}/{guildId}/{channelId}")
