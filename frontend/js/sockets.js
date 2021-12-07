@@ -102,9 +102,7 @@ function socketLogic(socket) {
 
 		const id = session.userId;
 		console.log(msg);
-		const [err, data] = await backend.post(`/messages/${id}/@me/${friendId}`, {
-			message: msg,
-		});
+		const [err, data] = await backend.post(`/messages/${id}/@me/${friendId}`, msg);
 		console.log(data);
 		cb(data);
 

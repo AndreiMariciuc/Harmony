@@ -1,9 +1,10 @@
 html, body {
     margin: 0;
+    height: 100%;
 }
 
 body {
-    background: linear-gradient(to left bottom, #e9e9e9, #ebebeb, #d6d6d6, rgba(183, 183, 183, 0.54), #505050);
+    background: linear-gradient(to left bottom, #e9e9e9, #ebebeb, #d6d6d6, rgb(214, 214, 214), #505050);
 }
 
 .login-div {
@@ -53,7 +54,7 @@ body {
     padding: 10px 10px 10px 5px;
 }
 
-.username, .password {
+.username, .password, .email {
     display: block;
     border-bottom: 1px solid #b3b3b3;
     margin-bottom: 30px;
@@ -72,7 +73,7 @@ body {
     font-weight: 300;
 }
 
-#sign-in-btn, #register-btn {
+#sign-in-btn, #register-btn, #login-btn {
     outline: none;
     border: none;
     cursor: pointer;
@@ -88,11 +89,11 @@ body {
     box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
-#sign-in-btn:hover, #register-btn:hover {
+#sign-in-btn:hover, #register-btn:hover, #login-btn:hover {
     background: radial-gradient(circle, #2fdbb6, #32d6b3, #32c9a8, #36c7a7, #38bb9f);
 }
 
-#sign-in-btn:active, #register-btn:active {
+#sign-in-btn:active, #register-btn:active, #login-btn:active {
     background: radial-gradient(circle, #1da88a, #1ea084, #229c82, #23947b, #238d76);
 }
 

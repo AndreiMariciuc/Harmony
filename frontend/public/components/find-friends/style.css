@@ -36,3 +36,8 @@
 
 	cursor: inherit;
 }
+
+.find-friends-container {
+	overflow-y: hidden;
+	height: 100%;
+}
