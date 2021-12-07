@@ -21,7 +21,8 @@ public class MessagingServiceImpl implements MessagingService {
     private final MessagingNativeQueryRepository messagingNativeQueryRepository;
 
     @Autowired
-    public MessagingServiceImpl(UserRepository userRepository, MessagingRepository messagingRepository, MessagingNativeQueryRepository messagingNativeQueryRepository) {
+    public MessagingServiceImpl(UserRepository userRepository, MessagingRepository messagingRepository,
+                                MessagingNativeQueryRepository messagingNativeQueryRepository) {
         this.userRepository = userRepository;
         this.messagingRepository = messagingRepository;
         this.messagingNativeQueryRepository = messagingNativeQueryRepository;
