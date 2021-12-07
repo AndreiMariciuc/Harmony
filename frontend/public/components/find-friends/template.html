@@ -1,7 +1,9 @@
 <div>
-    <input v-model="likeUser" placeholder="Scrie un nume !"/>
-    <div v-for="user in userList" :key="user.id">
-        <p>{{ user.username }}</p>
-        <button @click="sendFriendRequest(user.id)">Add friend!</button>
-    </div>
+	<input class="search-bar" v-model="likeUser" placeholder="Scrie un nume !" />
+	<div class="friend-suggestion" v-for="user in userList" :key="user.id">
+		<label class="friend-name">{{ user.username }}</label>
+		<button class="add-friend-btn" @click="sendFriendRequest(user.id)">
+			Add friend!
+		</button>
+	</div>
 </div>
