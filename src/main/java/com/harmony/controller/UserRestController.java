@@ -23,7 +23,7 @@ public class UserRestController {
     }
 
     @GetMapping("/{id}")
-    public ResponseDto register(@PathVariable("id") Long id) {
+    public ResponseDto getUserData(@PathVariable("id") Long id) {
         String error = null;
         UserDto user = null;
 
