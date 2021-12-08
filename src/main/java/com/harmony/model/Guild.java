@@ -1,5 +1,6 @@
 package com.harmony.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import org.hibernate.Hibernate;
 
@@ -27,6 +28,7 @@ public class Guild {
 
     @OneToMany(mappedBy = "guild")
     @ToString.Exclude
+    @JsonBackReference
     private Set<UserGuild> userGuilds = new HashSet<>();
 
     @OneToMany(mappedBy = "guild")

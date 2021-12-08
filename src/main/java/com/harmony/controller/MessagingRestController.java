@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/messages")
@@ -28,7 +27,8 @@ public class MessagingRestController {
     }
 
     @GetMapping("/{user1Id}/@me/{user2Id}")
-    public ResponseDto getPrivateMessages(@PathVariable Long user1Id, @PathVariable Long user2Id, @RequestParam(defaultValue = "0") Integer startMessageIndex) {
+    public ResponseDto getPrivateMessages(@PathVariable Long user1Id, @PathVariable Long user2Id,
+                                          @RequestParam(defaultValue = "0") Integer startMessageIndex) {
         String error = null;
         List data = null;
 
@@ -42,9 +42,12 @@ public class MessagingRestController {
     }
 
     @PostMapping("/{user1Id}/@me/{user2Id}")
-    public ResponseDto sendPrivateMessages(@PathVariable Long user1Id, @PathVariable Long user2Id, @RequestBody MessageDto messageDto) {
+    public ResponseDto sendPrivateMessages(@PathVariable Long user1Id, @PathVariable Long user2Id,
+                                           @RequestBody MessageDto messageDto) {
         String error = null;
         MessageDto frontendMessage = null;
+
+        System.out.println(messageDto.getMessage());
 
         try {
             Message message = MessageMapper.sendMessageReverseMapping(messageDto);
@@ -57,7 +60,8 @@ public class MessagingRestController {
     }
 
     @GetMapping("/{userId}/{guildId}/{channelId}")
-    public ResponseDto getGuildMessages(@PathVariable Long userId, @PathVariable Long guildId, @PathVariable Long channelId) {
+    public ResponseDto getGuildMessages(@PathVariable Long userId, @PathVariable Long guildId,
+                                        @PathVariable Long channelId) {
         String error = null;
 
         try {

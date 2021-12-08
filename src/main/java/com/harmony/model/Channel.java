@@ -1,5 +1,6 @@
 package com.harmony.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import org.hibernate.Hibernate;
 
@@ -20,9 +21,10 @@ public class Channel {
     private Long id;
 
     @ManyToOne
+    @JsonBackReference
     private ChannelCategory category;
 
-    @OneToOne(mappedBy = "channel")
+    @OneToOne
     private ChannelType type;
 
     private String name;

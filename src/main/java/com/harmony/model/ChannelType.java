@@ -1,5 +1,6 @@
 package com.harmony.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import org.hibernate.Hibernate;
 
@@ -19,7 +20,8 @@ public class ChannelType {
 
     private String name;
 
-    @OneToOne
+    @OneToOne(mappedBy = "type")
+    @JsonBackReference
     private Channel channel;
 
     @Override

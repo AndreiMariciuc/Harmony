@@ -1,5 +1,6 @@
 package com.harmony.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import org.hibernate.Hibernate;
 
@@ -20,9 +21,11 @@ public class UserGuild {
     private Long id;
 
     @ManyToOne
+    @JsonBackReference
     private User user;
 
     @ManyToOne
+    @JsonBackReference
     private Guild guild;
 
     @ManyToMany(mappedBy = "userGuilds")

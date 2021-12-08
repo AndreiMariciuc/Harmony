@@ -1,5 +1,6 @@
 package com.harmony.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import org.hibernate.Hibernate;
 
@@ -19,7 +20,10 @@ public class ChannelCategory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String name;
+
     @ManyToOne
+    @JsonBackReference
     private Guild guild;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")

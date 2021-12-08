@@ -40,6 +40,12 @@ function socketLogic(socket) {
 		cb(data);
 	});
 
+	socket.on('guilds/all', async ({ id}, cb) => {
+		if (id == null) id = session.userId;
+		const [err, data] = await backend.get(`/guilds/${id}`);
+		cb(data);
+	});
+
 	socket.on('users/requests', async ({ id }, cb) => {
 		if (id == null) id = session.userId;
 		const [err, data] = await backend.get(`/users/${id}/requests`);

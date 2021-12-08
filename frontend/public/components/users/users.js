@@ -4,17 +4,19 @@ const template = await createTemplate('users');
 
 import friends from '../friends/friends.js';
 import findFriends from '../find-friends/find-friends.js';
+import guilds from '../guilds/guilds.js';
 
 const component = {
 	template: template,
     props: ['socket'],
     components: {
         'tab-personal' : friends,
-        'tab-global': findFriends
+        'tab-global': findFriends,
+        'tab-guilds': guilds,
     },
     data() {
         return {
-            tabs: ['Personal', 'Global'],
+            tabs: ['Personal', 'Global', 'Guilds'],
             currentTab: 'Personal',
         };
     },
