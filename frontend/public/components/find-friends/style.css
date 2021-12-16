@@ -1,0 +1,43 @@
+.users .friend-suggestion {
+	display: flex;
+	width: 100%;
+
+	padding: 0.5em 0.1em;
+
+	justify-content: center;
+	align-items: center;
+}
+
+.users .friend-suggestion:hover {
+	cursor: pointer;
+	background-color: rgba(79, 84, 92, 0.16);
+}
+
+.users .search-bar {
+	width: 100%;
+}
+
+.users .friend-suggestion .friend-name {
+	flex: 1 1 70%;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	color: #dcddde;
+
+	cursor: inherit;
+}
+
+.users .friend-suggestion .add-friend-btn {
+	flex: 1 1 30%;
+
+	border-radius: 10%;
+
+	cursor: inherit;
+}
+
+.find-friends-container {
+	overflow-y: hidden;
+	height: 100%;
+}

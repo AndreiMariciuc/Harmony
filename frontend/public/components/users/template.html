@@ -1,0 +1,4 @@
+<div>
+    <button v-for="(tab, i) in tabs" :key="i" @click="currentTab = tab">{{ tab }}</button>
+    <component :is="currentTabComponent" :socket="socket"></component>
+</div>
