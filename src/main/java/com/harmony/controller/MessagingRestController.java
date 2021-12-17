@@ -9,6 +9,7 @@ import com.harmony.service.MessagingService;
 import com.harmony.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -30,7 +31,7 @@ public class MessagingRestController {
     public ResponseDto getPrivateMessages(@PathVariable Long user1Id, @PathVariable Long user2Id,
                                           @RequestParam(defaultValue = "0") Integer startMessageIndex) {
         String error = null;
-        List data = null;
+        List<MessageDto> data = null;
 
         try {
             data = messagingService.getPrivateMessages(user1Id, user2Id, startMessageIndex);
@@ -39,6 +40,13 @@ public class MessagingRestController {
         }
 
         return new ResponseDto(error, data);
+    }
+
+    @PostMapping("/load-image")
+    public String saveUploadedImage(@RequestParam MultipartFile image) {
+        System.out.println(image.getName());
+        System.out.println("ORICE");
+        return image.getName();
     }
 
     @PostMapping("/{user1Id}/@me/{user2Id}")

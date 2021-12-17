@@ -98,8 +98,6 @@ function socketLogic(socket) {
 		const [err, data] = await backend.get(
 			`/messages/${id}/@me/${conversation.id}`
 		);
-		console.log(err);
-		console.log(data);
 		cb(data);
 	});
 

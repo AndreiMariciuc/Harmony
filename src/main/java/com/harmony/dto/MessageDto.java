@@ -20,5 +20,6 @@ public class MessageDto {
     private Long channelId;
 
     private String message;
+    private String imageUrl;
     private Date date;
 }

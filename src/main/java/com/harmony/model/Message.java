@@ -29,5 +29,7 @@ public class Message {
 
     private String message;
 
+    private String imageUrl;
+
     private Date date;
 }
