@@ -15,6 +15,7 @@ public class MessageMapper {
             messageDto.setChannelId(message.getChannel().getId());
         messageDto.setMessage(message.getMessage());
         messageDto.setDate(message.getDate());
+        messageDto.setImageUrl(message.getImageUrl());
 
         return messageDto;
     }

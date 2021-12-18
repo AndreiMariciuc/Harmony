@@ -8,8 +8,13 @@
             <p>{{ msg.message}}, {{msg.date}}</p>
         </div>
     </div>
+
+<!--    <component :is="photoComponent"></component>-->
+    <photo-component v-if="photoState" @image-uploaded="handleImageUploaded"></photo-component>
+
     <div class="footer">
         <input v-model="message" placeholder="Write a message here!" @keyup.enter="sendMessage"/>
+        <button @click="changePhotoState">Photo</button>
     </div>
 </div>
 

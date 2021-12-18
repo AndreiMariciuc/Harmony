@@ -1,0 +1,9 @@
+<label for="image_upload">Choose image to upload (PNG, JPG)</label>
+<input @change="handleImageUpload" type="file" id="image_upload" name="image_upload" accept=".jpg, .jpeg, .png">
+
+<div v-if="image === null">
+    <p>No files currently selected for upload</p>
+</div>
+<div class="preview"  v-else>
+    <img :src="generatePreview"/>
+</div>
