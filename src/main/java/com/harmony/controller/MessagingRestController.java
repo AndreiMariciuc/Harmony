@@ -43,10 +43,10 @@ public class MessagingRestController {
     }
 
     @PostMapping("/load-image")
-    public String saveUploadedImage(@RequestParam MultipartFile image) {
-        System.out.println(image.getName());
+    public ResponseDto saveUploadedImage(@RequestParam(required = true) MultipartFile file) {
+        System.out.println(file.getName());
         System.out.println("ORICE");
-        return image.getName();
+        return new ResponseDto(null, file.getName());
     }
 
     @PostMapping("/{user1Id}/@me/{user2Id}")

@@ -3,30 +3,30 @@ import { createApp } from './vue.js';
 const socket = io();
 
 const app = createApp({
-    data() {
-        return {
-            user: null,
-            socket: socket,
-            activeConversation: null,
-        };
-    },
-    mounted() {
-        socket.emit('users', { id: null }, response => {
-            if(response.error) {
-                console.log(response.error);
-            }
+	data() {
+		return {
+			user: null,
+			socket: socket,
+			activeConversation: null,
+		};
+	},
+	mounted() {
+		socket.emit('users', { id: null }, response => {
+			if (response.error) {
+				console.log(response.error);
+			}
 
-            this.user = response.data;
-        });
-    },
-    methods: {
-        handleUserSelected(conversation) {
-            console.log(conversation);
-            this.activeConversation = conversation;
-        }
-    },
-    template: `
-        <messaging class="messaging" :socket="socket" :conversation="activeConversation"></messaging>
+			this.user = response.data;
+		});
+	},
+	methods: {
+		handleUserSelected(conversation) {
+			console.log(conversation);
+			this.activeConversation = conversation;
+		},
+	},
+	template: `
+        <messaging class="messaging" :socket="socket" :conversation="activeConversation" :user="user"></messaging>
         <users class="users" :socket="socket" @user-selected="handleUserSelected"></users>
     `,
 });

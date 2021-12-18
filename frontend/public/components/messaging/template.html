@@ -1,24 +1,44 @@
 <div v-if="activeConversation">
-    <div class="header">
-        <p>{{ conversationName }}</p>
-    </div>
-    <div class="body">
-        <div v-for="(msg, i) in messages" :key="i">
-            <p>{{ msg.sender.username }}</p>
-            <p>{{ msg.message}}, {{msg.date}}</p>
-        </div>
-    </div>
+	<div class="header">
+		<p>{{ conversationName }}</p>
+		<button class="call-btn" @click="joinCall">Join call</button>
+	</div>
+	<div class="body">
+		<div v-for="(msg, i) in messages" :key="i">
+			<p>{{ msg.sender.username }}</p>
+			<p>{{ msg.message}}, {{msg.date}}</p>
+		</div>
+	</div>
 
-<!--    <component :is="photoComponent"></component>-->
-    <photo-component v-if="photoState" @image-uploaded="handleImageUploaded"></photo-component>
+	<!--    <component :is="photoComponent"></component>-->
+	<!-- <photo-component
+		v-if="photoState"
+		@image-uploaded="handleImageUploaded"
+	></photo-component> -->
+	<photo-component
+		v-if="photoState"
+		:image="image"
+		@delete-image="changePhotoState"
+	></photo-component>
 
-    <div class="footer">
-        <input v-model="message" placeholder="Write a message here!" @keyup.enter="sendMessage"/>
-        <button @click="changePhotoState">Photo</button>
-    </div>
+	<div class="footer">
+		<input
+			v-model="message"
+			placeholder="Write a message here!"
+			@keyup.enter="sendMessage"
+		/>
+		<input
+			@change="handleImageUpload"
+			ref="imageupload"
+			type="file"
+			id="image-upload"
+			name="image-upload"
+			accept=".jpg, .jpeg, .png"
+		/>
+		<label for="image-upload" class="upload-btn-wrapper">
+			<label class="upload-btn" for="image-upload"></label>
+		</label>
+	</div>
 </div>
 
-<div v-else class="helpful">
-    {{ helpfulMessage }}
-</div>
-
+<div v-else class="helpful">{{ helpfulMessage }}</div>
