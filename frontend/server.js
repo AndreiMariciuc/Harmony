@@ -3,6 +3,7 @@ import { createServer } from 'http';
 
 import { sendView } from './js/misc.js';
 import redirects from './routes/redirects.js';
+import callRouter from './routes/call.js';
 import {
 	sessionCreationMiddleware,
 	sessionVerificationMiddleware,
@@ -23,6 +24,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(sessionCreationMiddleware);
+app.use('/call', callRouter);
 app.use(sessionVerificationMiddleware);
 app.use('/', redirects);
 
