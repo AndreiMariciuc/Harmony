@@ -7,6 +7,9 @@
 		<div v-for="(msg, i) in messages" :key="i">
 			<p>{{ msg.sender.username }}</p>
 			<p>{{ msg.message}}, {{msg.date}}</p>
+			<div v-if="msg.imageUrl != null">
+				<img :src="msg.imageUrl" style="width: 600px; height: 320px;"/>
+			</div>
 		</div>
 	</div>
 

@@ -56,10 +56,10 @@ const component = {
 			);
 		},
 		async sendMessage() {
-			let imageUrl = null;
+			let url = null;
 			if (this.image != null) {
 				const formData = new FormData();
-				formData.append('file', this.image);
+				formData.append("image", this.image);
 
 				const response = await fetch(
 					'http://127.0.0.1:8080/messages/load-image',
@@ -71,25 +71,25 @@ const component = {
 							'Access-Control-Allow-Origin': '*',
 						}),
 					}
-				);
+				).then(response => response.json())
+					.then(data => {
+						if(data.error != null) {
+							console.log(data.error);
+						} else {
+							url = data.data;
+						}
+					});
 
-				console.log(response);
-
-				try {
-					imageUrl = await response.json();
-					console.log(imageUrl);
-				} catch (err) {
-					console.log(err);
-				}
+				this.image = null;
 			}
-
-			return;
 
 			this.socket.emit(
 				'send-private-message',
 				{
 					friendId: this.activeConversation.id,
-					msg: { message: this.message },
+					msg: { message: this.message,
+						   imageUrl: url
+					},
 				},
 				response => {
 					console.log(response);

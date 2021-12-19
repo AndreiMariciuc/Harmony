@@ -7,11 +7,14 @@ import com.harmony.model.Message;
 import com.harmony.service.MessageRequestService;
 import com.harmony.service.MessagingService;
 import com.harmony.service.UserService;
+import com.harmony.util.ImageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/messages")
@@ -19,6 +22,9 @@ public class MessagingRestController {
     private final UserService userService;
     private final MessageRequestService messageRequestService;
     private final MessagingService messagingService;
+
+    @Value("${local.system.imgs.dir}")
+    private String localFileSystemImagesDir;
 
     @Autowired
     public MessagingRestController(UserService userService, MessageRequestService messageRequestService, MessagingService messagingService) {
@@ -43,10 +49,11 @@ public class MessagingRestController {
     }
 
     @PostMapping("/load-image")
-    public ResponseDto saveUploadedImage(@RequestParam(required = true) MultipartFile file) {
-        System.out.println(file.getName());
-        System.out.println("ORICE");
-        return new ResponseDto(null, file.getName());
+    public ResponseDto saveUploadedImage(@RequestParam MultipartFile image) {
+        Optional<String> upload = ImageUtil.upload(image, localFileSystemImagesDir);
+
+        return upload.map(s -> new ResponseDto(null, s))
+                .orElseGet(() -> new ResponseDto("Error saving photo", null));
     }
 
     @PostMapping("/{user1Id}/@me/{user2Id}")
