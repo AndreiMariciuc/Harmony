@@ -3,7 +3,6 @@ import createTemplate from '../../js/createTemplate.js';
 const template = await createTemplate('messaging');
 
 import upload_image from '../upload-image/upload-image.js';
-import { resolveComponent } from '../../js/vue.js';
 
 const component = {
 	template: template,

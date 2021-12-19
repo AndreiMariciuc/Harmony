@@ -1,5 +1,6 @@
 package com.harmony.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,5 +22,7 @@ public class MessageDto {
 
     private String message;
     private String imageUrl;
+
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date date;
 }
