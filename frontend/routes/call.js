@@ -8,6 +8,11 @@ const callManager = new CallManager();
 router.get('/:id1/:id2', (req, res) => {
 	const ids = [req.params.id1, req.params.id2];
 
+	if (!req.session.userId) {
+		sendView(res, 'login');
+		return;
+	}
+
 	if (ids.includes(req.session.userId.toString())) {
 		const room = callManager.createRoom(ids);
 		// console.log(room);

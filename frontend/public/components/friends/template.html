@@ -1,11 +1,21 @@
 <div>
-    <div v-for="user in pendingUsersList" :key="user.id">
-            <p>{{ user.username }}</p>
-            <button @click="rejectUser(user.id)">Reject</button>
-            <button @click="acceptUser(user.id)">Accept</button>
-    </div>
-    <hr>
-    <div class="friend" @click="selectUser(user)" v-for="user in friendsList" :key="user.id">
-        <p>{{ user.username }}</p>
-    </div>
+	<div v-for="user in pendingUsersList" :key="user.id">
+		<p>{{ user.username }}</p>
+		<button @click="rejectUser(user.id)">Reject</button>
+		<button @click="acceptUser(user.id)">Accept</button>
+	</div>
+
+	<div class="friends-container">
+		<h2>Friends</h2>
+		<div class="friends-wrapper">
+			<div
+				v-for="user in friendsList"
+				:key="user.id"
+				:class="['friend', { active: selectedUser?.id == user.id}]"
+				@click="selectUser(user)"
+			>
+				<label>{{ user.username }}</label>
+			</div>
+		</div>
+	</div>
 </div>

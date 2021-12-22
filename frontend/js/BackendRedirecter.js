@@ -1,11 +1,12 @@
 import axios from 'axios';
+import config from '../public/config/config.js';
 
-const BACKEND_ADDR = process.env.BACKEND_ADDR || 'http://localhost:8080';
+const BACKEND_ADDR = process.env.BACKEND_ADDR || config['backend-addr'];
 
 let instance = null;
 
 async function handleRequest(path, method, data, params) {
-	const url = `${BACKEND_ADDR}/${path}`;
+	const url = `${BACKEND_ADDR}${path}`;
 	let res = null;
 	let err = null;
 

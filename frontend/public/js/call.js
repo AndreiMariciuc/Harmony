@@ -1,7 +1,10 @@
 // DOM elements.
-const videoChatContainer = document.getElementById('video-chat-container');
 const localVideoComponent = document.getElementById('local-video');
 const remoteVideoComponent = document.getElementById('remote-video');
+const audioBtn = document.getElementById('audio-btn');
+const videoBtn = document.getElementById('video-btn');
+const deafenBtn = document.getElementById('deafen-btn');
+const hideVideoBtn = document.getElementById('hide-video-btn');
 
 window.onbeforeunload = leaveRoom;
 
@@ -16,6 +19,12 @@ let remoteStream;
 let isRoomCreator;
 let rtcPeerConnection; // Connection between the local device and the remote peer.
 let roomId;
+let audioTrack;
+let videoTrack;
+
+let isMuted = false;
+let isDeafened = false;
+let isHidden = false;
 
 // Free public STUN servers provided by Google.
 const iceServers = {
@@ -29,6 +38,75 @@ const iceServers = {
 };
 
 // BUTTON LISTENER ============================================================
+videoBtn.addEventListener('click', e => {
+	if (!videoTrack) return;
+	const newState = !videoTrack.enabled;
+	videoTrack.enabled = newState;
+
+	if (newState) videoBtn.classList.remove('disabled');
+	else videoBtn.classList.add('disabled');
+});
+
+const toggleAudio = e => {
+	if (!audioTrack) return;
+	if (isDeafened) {
+		toggleDeafen();
+		if (!e) return;
+		if (!isMuted) return;
+	}
+
+	const newState = !audioTrack.enabled;
+	audioTrack.enabled = newState;
+
+	if (newState) audioBtn.classList.remove('disabled');
+	else audioBtn.classList.add('disabled');
+
+	if (e) {
+		console.log(`New audio state: ${newState}`);
+		isMuted = !newState;
+	}
+};
+audioBtn.addEventListener('click', toggleAudio);
+
+const handleDeafenAudio = isDeafened => {
+	if (isMuted) return;
+
+	if (!isDeafened) {
+		audioTrack.enabled = true;
+		audioBtn.classList.remove('disabled');
+		return;
+	}
+
+	audioTrack.enabled = false;
+	audioBtn.classList.add('disabled');
+};
+const toggleDeafen = e => {
+	if (!remoteVideoComponent) return;
+
+	const newState = !remoteVideoComponent.muted;
+	remoteVideoComponent.muted = newState;
+
+	if (!newState) deafenBtn.classList.remove('disabled');
+	else deafenBtn.classList.add('disabled');
+
+	handleDeafenAudio((isDeafened = newState));
+};
+deafenBtn.addEventListener('click', toggleDeafen);
+
+hideVideoBtn.addEventListener('click', e => {
+	if (!isHidden) {
+		localVideoComponent.style.display = 'none';
+		isHidden = true;
+
+		hideVideoBtn.classList.add('disabled');
+
+		return;
+	}
+
+	localVideoComponent.style.display = 'initial';
+	isHidden = false;
+	hideVideoBtn.classList.remove('disabled');
+});
 
 // SOCKET EVENT CALLBACKS =====================================================
 socket.on('connect', _ => {
@@ -51,6 +129,12 @@ socket.on('room_joined', async () => {
 
 	await setLocalStream(mediaConstraints);
 	socket.emit('start_call', roomId);
+});
+
+socket.on('change_owner', async () => {
+	console.log('Socket event callback: change_owner');
+
+	isRoomCreator = true;
 });
 
 socket.on('full_room', () => {
@@ -121,6 +205,11 @@ async function setLocalStream(mediaConstraints) {
 
 	localStream = stream;
 	localVideoComponent.srcObject = stream;
+
+	localStream.getTracks().forEach(track => {
+		if (track.kind === 'audio') audioTrack = track;
+		if (track.kind === 'video') videoTrack = track;
+	});
 }
 
 function addLocalTracks(rtcPeerConnection) {

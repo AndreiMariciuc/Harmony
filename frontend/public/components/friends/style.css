@@ -1,3 +1,54 @@
-.users .friend:hover {
-    cursor: pointer;
+.users .component > div {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+
+	overflow-y: auto;
+}
+
+.users .component .friends-container h2 {
+	/* rgb(142, 146, 151); */
+	color: hsl(0, 0%, 90%);
+	font-size: 16px;
+	margin-left: 0.5rem;
+	margin-top: 0.5rem;
+}
+
+.users .component .friends-wrapper {
+	display: flex;
+	flex-direction: column;
+
+	gap: 0.15rem;
+
+	margin: 0.3em 0;
+}
+
+.users .component .friends-wrapper .friend {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	border-radius: 0.25em;
+	margin: 0 0.3em;
+	padding: 0.3em 0;
+
+	color: hsl(0, 0%, 50%);
+}
+
+.users .component .friends-wrapper .friend:hover {
+	cursor: pointer;
+
+	background-color: hsl(0, 0%, 30%);
+	color: hsl(0, 0%, 70%);
+}
+
+.users .component .friends-wrapper .friend.active {
+	background-color: hsl(0, 0%, 50%);
+	color: hsl(0, 0%, 100%);
+}
+
+.users .component .friends-wrapper .friend label {
+	pointer-events: none;
 }

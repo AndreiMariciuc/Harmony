@@ -1,60 +1,84 @@
-<div v-if="activeConversation">
-    <div class="header">
-        <p>{{ conversationName }}</p>
-        <button class="call-btn" @click="joinCall">Join call</button>
-    </div>
-    <div class="body">
-        <div v-for="(msg, i) in messages" :key="i">
-            <div v-if="i%2 == 0" class="message-container">
-<!--                <img src="http://localhost:8080/img/Untitled.png"/>-->
-                <p>{{ msg.sender.username }}</p>
-                <p>{{ msg.message}}</p>
-                <div v-if="msg.imageUrl != null">
-                    <img :src="msg.imageUrl" style="width: 600px; height: 320px;"/>
-                </div>
-                <span class="date-right"> {{msg.date}} </span>
-            </div>
-            <div class="message-container-darker" v-else>
-<!--                <img src="http://localhost:8080/img/Untitled.png"/>-->
-                <p>{{ msg.sender.username }}</p>
-                <p>{{ msg.message}}</p>
-                <div v-if="msg.imageUrl != null">
-                    <img :src="msg.imageUrl" style="width: 600px; height: 320px;"/>
-                </div>
-                <span class="date-left"> {{msg.date}} </span>
-            </div>
-        </div>
-    </div>
+<div v-show="activeConversation != null">
+	<div class="header">
+		<label class="at-sign"><i class="fa fa-at" aria-hidden="true"></i></label>
+		<label class="username">{{ conversationName }}</label>
+		<div class="call-btn" @click="joinCall">
+			<svg
+				x="0"
+				y="0"
+				class="icon-22AiRD"
+				aria-hidden="false"
+				width="24"
+				height="24"
+				viewBox="0 0 24 24"
+			>
+				<path
+					fill="currentColor"
+					fill-rule="evenodd"
+					clip-rule="evenodd"
+					d="M11 5V3C16.515 3 21 7.486 21 13H19C19 8.589 15.411 5 11 5ZM17 13H15C15 10.795 13.206 9 11 9V7C14.309 7 17 9.691 17 13ZM11 11V13H13C13 11.896 12.105 11 11 11ZM14 16H18C18.553 16 19 16.447 19 17V21C19 21.553 18.553 22 18 22H13C6.925 22 2 17.075 2 11V6C2 5.447 2.448 5 3 5H7C7.553 5 8 5.447 8 6V10C8 10.553 7.553 11 7 11H6C6.063 14.938 9 18 13 18V17C13 16.447 13.447 16 14 16Z"
+				></path>
+			</svg>
+		</div>
+		<!-- <button class="call-btn" @click="joinCall">Join call</button> -->
+	</div>
+	<div class="body" ref="body">
+		<div v-for="(msg, i) in messages" :key="i">
+			<!--                <img src="http://localhost:8080/img/Untitled.png"/>-->
+			<h2 v-if="checkLastMessage(i)">
+				<span class="username">{{ msg.sender.username }}</span>
+				<span class="date">{{ msg.date }}</span>
+			</h2>
+			<p class="msg">{{ msg.message }}</p>
+			<img
+				@load="updateImage($event)"
+				v-if="isImage(msg.imageUrl)"
+				:src="msg.imageUrl"
+				style="width: auto; height: 20rem; max-width: 20rem; max-height: 20rem"
+			/>
+			<video
+				@loadeddata="updateVideo($event)"
+				controls
+				v-if="isVideo(msg.imageUrl)"
+				:src="msg.imageUrl"
+				style="width: auto; height: 20rem; max-width: 20rem; max-height: 20rem"
+			/>
+		</div>
+	</div>
 
-    <!--    <component :is="photoComponent"></component>-->
-    <!-- <photo-component
+	<!--    <component :is="photoComponent"></component>-->
+	<!-- <photo-component
         v-if="photoState"
         @image-uploaded="handleImageUploaded"
     ></photo-component> -->
-    <photo-component
-            v-if="photoState"
-            :image="image"
-            @delete-image="changePhotoState"
-    ></photo-component>
+	<photo-component
+		v-if="photoState"
+		:image="image"
+		@delete-image="changePhotoState"
+	></photo-component>
 
-    <div class="footer">
-        <input
-                v-model="message"
-                placeholder="Write a message here!"
-                @keyup.enter="sendMessage"
-        />
-        <input
-                @change="handleImageUpload"
-                ref="imageupload"
-                type="file"
-                id="image-upload"
-                name="image-upload"
-                accept=".jpg, .jpeg, .png"
-        />
-        <label for="image-upload" class="upload-btn-wrapper">
-            <label class="upload-btn" for="image-upload"></label>
-        </label>
-    </div>
+	<div class="footer">
+		<input
+			v-model="message"
+			placeholder="Write a message here!"
+			@keyup.enter="sendMessage"
+		/>
+		<input
+			@change="handleImageUpload"
+			ref="imageupload"
+			type="file"
+			id="image-upload"
+			name="image-upload"
+			accept=".jpg, .jpeg, .png"
+		/>
+		<label class="upload-btn-wrapper">
+			<label class="upload-btn" for="image-upload">
+				<i class="fa fa-plus-circle" aria-hidden="true"></i
+			></label>
+		</label>
+	</div>
 </div>
 
-<div v-else class="helpful">{{ helpfulMessage }}</div>
+<div v-show="activeConversation == null" class="helpful">
+	{{ helpfulMessage }}
+</div>

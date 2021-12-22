@@ -1,3 +1,23 @@
+@font-face {
+	font-family: 'Uni Sans Heavy';
+	src: url('//db.onlinewebfonts.com/t/4f6fb2fa3c231278167b36e966718cbb.eot');
+	src: url('//db.onlinewebfonts.com/t/4f6fb2fa3c231278167b36e966718cbb.eot?#iefix')
+			format('embedded-opentype'),
+		url('//db.onlinewebfonts.com/t/4f6fb2fa3c231278167b36e966718cbb.woff2')
+			format('woff2'),
+		url('//db.onlinewebfonts.com/t/4f6fb2fa3c231278167b36e966718cbb.woff')
+			format('woff'),
+		url('//db.onlinewebfonts.com/t/4f6fb2fa3c231278167b36e966718cbb.ttf')
+			format('truetype'),
+		url('//db.onlinewebfonts.com/t/4f6fb2fa3c231278167b36e966718cbb.svg#Uni Sans Heavy')
+			format('svg');
+}
+
+@font-face {
+	font-family: 'myfont';
+	src: url('fonts/discord.woff') format('woff');
+}
+
 * {
 	margin: 0;
 	padding: 0;
@@ -6,31 +26,54 @@
 
 html,
 body {
-	width: 100vw;
-	height: 100vh;
+	width: 100%;
+	height: 100%;
+	font-family: 'myfont', 'Arial';
+	overflow: hidden;
+}
+
+body {
+	position: relative;
+}
+
+::-webkit-scrollbar {
+	width: 0.5em;
+}
+
+::-webkit-scrollbar-track {
+	background: hsl(210, 10%, 20%);
+	border-radius: 100vw;
+	margin-block: 0.5em;
+}
+
+::-webkit-scrollbar-thumb {
+	background: hsl(216, 7%, 14%);
+	border-radius: 100vw;
 }
 
 #app {
 	display: flex;
 	flex-direction: row;
 
-	width: 100%;
-	height: 100%;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
 }
 
 .users {
-	flex: 1 1 25%;
-	background-color: #2f3136;
+	flex: 1 1 20rem;
+	background-color: hsl(223, 7%, 20%);
 }
 
 .messaging {
-	flex: 1 1 75%;
-	background-color: yellow;
+	flex: 1 1 100%;
+	min-width: 20rem;
+	background-color: hsl(220, 8%, 23%);
 }
 
 /* .friends {
 	flex: 1 1 25%;
 	background-color: blue;
 } */
-
-

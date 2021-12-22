@@ -27,7 +27,7 @@ const app = createApp({
 	},
 	template: `
         <messaging class="messaging" :socket="socket" :conversation="activeConversation" :user="user"></messaging>
-        <users class="users" :socket="socket" @user-selected="handleUserSelected"></users>
+        <users class="users" :socket="socket" @user-selected="handleUserSelected" :conversation="activeConversation"></users>
     `,
 });
 

@@ -1,4 +1,21 @@
 <div>
-    <button v-for="(tab, i) in tabs" :key="i" @click="currentTab = tab">{{ tab }}</button>
-    <component :is="currentTabComponent" :socket="socket"></component>
+	<div class="tabs-container">
+		<div class="tabs-wrapper">
+			<div
+				v-for="(tab, i) in tabs"
+				:key="i"
+				:class="['tab-button', { active: currentTab === tab}]"
+				@click="currentTab = tab"
+			>
+				{{ tab }}
+			</div>
+		</div>
+	</div>
+
+	<component
+		class="component"
+		:is="currentTabComponent"
+		:socket="socket"
+		:conversation="conversation"
+	></component>
 </div>

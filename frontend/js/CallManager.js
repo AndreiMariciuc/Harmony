@@ -5,27 +5,42 @@ class Room {
 		this.setInactive = setInactive;
 		this.timeout = setInactive();
 		this.connected = [];
-		this.size = 0;
+		this.callOwner = null;
 	}
 
 	join(id) {
 		id = id.toString();
-		console.log(id);
-		console.log(this.userIds);
 		if (!this.userIds.includes(id)) return false;
+
+		if (this.size <= 0) {
+			this.callOwner = id;
+		}
+
 		this.connected.push(id);
 		clearTimeout(this.timeout);
-		this.size++;
 	}
 
 	disconnect(id) {
-		console.log('Last length: ' + this.connected.length);
+		if (id == this.callOwner) {
+			this.callOwner = null;
+		}
+
 		this.connected = this.connected.filter(x => x != id);
-		console.log('New length: ' + this.connected.length);
-		if (this.connected.length <= 0) {
+		if (this.size <= 0) {
 			this.timeout = this.setInactive();
 		}
-		this.size--;
+	}
+
+	changeOwner() {
+		if (this.size <= 0) return false;
+
+		this.callOwner = this.connected[0];
+		console.log('New call owner is ' + this.callOwner);
+		return true;
+	}
+
+	get size() {
+		return this.connected.length;
 	}
 }
 

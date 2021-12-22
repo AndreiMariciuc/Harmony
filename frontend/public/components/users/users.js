@@ -8,30 +8,25 @@ import guilds from '../guilds/guilds.js';
 
 const component = {
 	template: template,
-    props: ['socket'],
-    components: {
-        'tab-personal' : friends,
-        'tab-global': findFriends,
-        'tab-guilds': guilds,
-    },
-    data() {
-        return {
-            tabs: ['Personal', 'Global', 'Guilds'],
-            currentTab: 'Personal',
-        };
-    },
-    mounted() {
-    },
-    computed: {
-        currentTabComponent() {
-            return 'tab-' + this.currentTab.toLowerCase();
-        }
-    },
-    methods: {
-        test() {
-            console.log('caca');
-        }
-    },
+	props: ['socket', 'conversation'],
+	components: {
+		'tab-personal': friends,
+		'tab-global': findFriends,
+		'tab-guilds': guilds,
+	},
+	data() {
+		return {
+			tabs: ['Personal', 'Global', 'Guilds'],
+			currentTab: 'Personal',
+		};
+	},
+	mounted() {},
+	computed: {
+		currentTabComponent() {
+			return 'tab-' + this.currentTab.toLowerCase();
+		},
+	},
+	methods: {},
 };
 
 export default component;

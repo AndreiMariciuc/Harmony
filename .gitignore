@@ -5,7 +5,7 @@ target/
 !**/src/test/**/target/
 
 src/main/resources
-src/main/webapp/WEB-INF/imgs/*
+src/main/webapp/WEB-INF/imgs
 
 ### STS ###
 .apt_generated
