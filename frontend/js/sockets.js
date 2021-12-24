@@ -18,7 +18,10 @@ function initSocketServer(httpServer) {
 
 function socketLogic(socket) {
 	const session = socket.request.session;
-	if (session.userId == null) return;
+	if (session.userId == null) {
+		socket.emit('invalid-session');
+		return;
+	}
 
 	socket.join(session.userId);
 

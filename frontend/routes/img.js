@@ -7,6 +7,27 @@ import FormData from 'form-data';
 
 const router = express.Router();
 
+router.head('/data/:id', async (req, res) => {
+	const id = req.params.id;
+
+	try {
+		const response = await axios.get(`${config['backend-addr']}/img/${id}`, {
+			responseType: 'arraybuffer',
+		});
+
+		for (const entry in response.headers) {
+			res.setHeader(entry.toString(), response.headers[entry]);
+		}
+
+		res.writeHead(response.status);
+		res.end();
+	} catch (err) {
+		console.log(`Error while fetching image: ${err}`);
+		res.writeHead(404);
+		res.end();
+	}
+});
+
 router.get('/:id', async (req, res) => {
 	const id = req.params.id;
 

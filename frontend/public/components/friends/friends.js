@@ -11,6 +11,7 @@ const component = {
 			pendingUsersList: [],
 			friendsList: [],
 			selectedUser: this.conversation,
+			friendRequests: false,
 		};
 	},
 	mounted() {
@@ -78,6 +79,9 @@ const component = {
 		},
 		selectUser(user) {
 			this.$parent.$emit('user-selected', { isUser: true, ...user });
+		},
+		toggleFriendRequests() {
+			this.friendRequests = !this.friendRequests;
 		},
 	},
 };

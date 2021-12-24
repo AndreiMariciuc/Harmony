@@ -2,7 +2,7 @@
 	<div class="header">
 		<label class="at-sign"><i class="fa fa-at" aria-hidden="true"></i></label>
 		<label class="username">{{ conversationName }}</label>
-		<div class="call-btn" @click="joinCall">
+		<div class="call-btn" data-tooltip="Join the call" @click="joinCall">
 			<svg
 				x="0"
 				y="0"
@@ -23,7 +23,7 @@
 		<!-- <button class="call-btn" @click="joinCall">Join call</button> -->
 	</div>
 	<div class="body" ref="body">
-		<div v-for="(msg, i) in messages" :key="i">
+		<div v-for="(msg, i) in messages" :key="i" :id="msg.id">
 			<!--                <img src="http://localhost:8080/img/Untitled.png"/>-->
 			<h2 v-if="checkLastMessage(i)">
 				<span class="username">{{ msg.sender.username }}</span>
@@ -43,6 +43,29 @@
 				:src="msg.imageUrl"
 				style="width: auto; height: 20rem; max-width: 20rem; max-height: 20rem"
 			/>
+			<div v-if="isFile(msg.imageUrl)" class="file-container">
+				<img class="file-icon" src="/res/file.svg" />
+				<div class="file-info-container">
+					<a
+						class="file-name"
+						:href="msg.imageUrl"
+						:download="msg.imageUrl.split('-').pop()"
+					>
+						{{ msg.imageUrl.split('-').pop() }}
+					</a>
+					<label class="file-size" v-if="msg._metadataloaded"
+						>{{ msg._filesize }}</label
+					>
+					<div v-else>{{ getFileSize(msg) }}</div>
+				</div>
+				<a
+					class="file-download-icon"
+					:href="msg.imageUrl"
+					:download="msg.imageUrl.split('-').pop()"
+				>
+					<i class="fa fa-download" aria-hidden="true"></i>
+				</a>
+			</div>
 		</div>
 	</div>
 

@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
         User userByNameAndPassword = userRepository.findUserByNameAndPassword(user.getUsername(), user.getPassword());
 
         if (userByNameAndPassword == null)
-            throw new UserSignInException("username or password wrong!\n Try again!");
+            throw new UserSignInException("Username or password incorrect!");
 
         return UserMapper.defaultMapping(userByNameAndPassword);
     }
@@ -55,6 +55,24 @@ public class UserServiceImpl implements UserService {
         }
 
         return UserMapper.defaultMapping(byId.get());
+    }
+
+    @Override
+    public UserDto findByName(String name) {
+        var byName = userRepository.findUserByName(name);
+
+        if(byName == null) return null;
+
+        return UserMapper.defaultMapping(byName);
+    }
+
+    @Override
+    public UserDto findByEmail(String email) {
+        var byEmail = userRepository.findUserByEmail(email);
+
+        if(byEmail == null) return null;
+
+        return UserMapper.defaultMapping(byEmail);
     }
 
     @Override

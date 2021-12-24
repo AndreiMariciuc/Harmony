@@ -8,6 +8,136 @@
 	overflow-y: auto;
 }
 
+.users .component .friend-request-container {
+	margin: 1em 0;
+}
+
+.users .component .friend-request-container .header {
+	cursor: pointer;
+
+	margin-top: 0.5rem;
+	padding: 0 0.5rem;
+
+	display: flex;
+	align-items: center;
+	/* justify-content: center; */
+}
+
+.users .component .friend-request-container .header span {
+	margin-left: auto;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.users .component .friend-request-container .header,
+.users .component .friend-request-container .header h2 {
+	color: hsl(0, 0%, 90%);
+	font-size: 16px;
+
+	user-select: none;
+}
+
+.users .component .friend-request-container .header:hover,
+.users .component .friend-request-container .header:hover h2 {
+	color: hsl(0, 0%, 100%);
+}
+
+.users .component .friend-requests-wrapper {
+	display: flex;
+	flex-direction: column;
+
+	gap: 0.3rem;
+
+	margin: 0.3em 0;
+
+	max-height: 0;
+	overflow: hidden;
+	--scale: 0;
+	transform-origin: top;
+	transform: scale(1, var(--scale));
+	transition: transform 0.2s ease-in, max-height 0.2s ease-out;
+}
+
+.users .component .friend-requests-wrapper.active {
+	--scale: 1;
+	max-height: 100%;
+	transition: transform 0.2s ease-out, max-height 0.2s ease-in;
+}
+
+.users .component .friend-requests-wrapper .request {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	border-radius: 0.25em;
+	margin: 0 0.3em;
+	padding: 0.5em 1em;
+
+	color: hsl(0, 0%, 50%);
+}
+
+.users .component .friend-requests-wrapper .request *:nth-child(2) {
+	flex: 1;
+	text-align: center;
+}
+
+.users .component .friend-requests-wrapper .request *:last-child {
+	margin-left: auto;
+}
+
+.users .component .friend-requests-wrapper .request:hover {
+	background-color: hsl(0, 0%, 30%);
+	color: hsl(0, 0%, 70%);
+}
+
+.users .component .friend-requests-wrapper .request .reject-btn {
+	--text-color: hsl(1, 83%, 58%);
+	--bg-color: transparent;
+	padding: 0.15em 0.5em;
+	/* margin: 0.3em; */
+
+	cursor: pointer;
+
+	background-color: var(--bg-color);
+	color: var(--text-color);
+	font-weight: bold;
+
+	border: 1px solid hsl(1, 83%, 58%);
+	border-radius: 0.4em;
+
+	transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out;
+}
+
+.users .component .friend-requests-wrapper .request .reject-btn:hover {
+	--text-color: hsl(223, 7%, 20%);
+	--bg-color: hsl(1, 83%, 58%);
+}
+
+.users .component .friend-requests-wrapper .request .accept-btn {
+	--text-color: hsl(152, 69%, 31%);
+	--bg-color: transparent;
+	padding: 0.15em 0.5em;
+	/* margin: 0.3em; */
+
+	cursor: pointer;
+
+	background-color: var(--bg-color);
+	color: var(--text-color);
+	font-weight: bold;
+
+	border: 1px solid hsl(152, 69%, 31%);
+	border-radius: 0.4em;
+
+	transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out;
+}
+
+.users .component .friend-requests-wrapper .request .accept-btn:hover {
+	--text-color: hsl(223, 7%, 20%);
+	--bg-color: hsl(152, 69%, 31%);
+}
+
 .users .component .friends-container h2 {
 	/* rgb(142, 146, 151); */
 	color: hsl(0, 0%, 90%);
@@ -32,7 +162,7 @@
 
 	border-radius: 0.25em;
 	margin: 0 0.3em;
-	padding: 0.3em 0;
+	padding: 0.5em 0;
 
 	color: hsl(0, 0%, 50%);
 }

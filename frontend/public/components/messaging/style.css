@@ -2,14 +2,19 @@
 	width: 100%;
 	height: 100%;
 
-	background: linear-gradient(
+	/* background: linear-gradient(
 		to left bottom,
 		#bdbbbb,
 		#8a8888,
 		#605f5f,
 		rgb(86, 84, 84),
 		#505050
-	);
+	); */
+
+	background-color: hsl(216, 7%, 14%);
+	color: hsl(0, 0%, 40%);
+	user-select: none;
+	font-weight: bold;
 
 	display: flex;
 	justify-content: center;
@@ -45,11 +50,14 @@
 
 	display: flex;
 	flex-direction: column;
+
+	padding-left: 1em;
+	padding-bottom: 1em;
 	/* flex-direction: column-reverse; */
 }
 
 .messaging .footer {
-	flex: 1 1 3em;
+	flex: 1 0 3em;
 	position: relative;
 	margin: 0.3em 0.5em;
 }
@@ -62,7 +70,7 @@
 	bottom: 0;
 	margin-top: auto;
 	margin-bottom: auto;
-	margin-right: 1.15rem;
+	margin-right: 2rem;
 
 	height: max-content;
 
@@ -72,6 +80,58 @@
 .messaging .header .call-btn:hover {
 	cursor: pointer;
 	color: hsl(0, 0%, 80%);
+}
+
+.messaging .header .call-btn::before,
+.messaging .header .call-btn::after {
+	--scale: 0;
+	--tooltip-color: hsl(216, 7%, 14%);
+	--arrow-size: 6px;
+
+	position: absolute;
+
+	/* bottom: -0.25rem; */
+	top: 100%;
+	left: 50%;
+
+	transform: translateX(-50%) translateY(var(--translate-y, 0))
+		scale(var(--scale));
+	transition: transform 70ms ease-in-out;
+	transform-origin: top center;
+
+	z-index: 1000;
+
+	pointer-events: none;
+}
+
+.messaging .header .call-btn::before {
+	--translate-y: calc(var(--arrow-size));
+
+	content: attr(data-tooltip);
+	padding: 0.5em 1em;
+
+	border-radius: 0.3rem;
+	text-align: center;
+	width: max-content;
+	height: max-content;
+
+	background-color: var(--tooltip-color);
+	color: hsl(0, 0%, 80%);
+	user-select: none;
+	font-weight: bold;
+}
+
+.messaging .header .call-btn:hover::before,
+.messaging .header .call-btn:hover::after {
+	--scale: 1;
+}
+
+.messaging .header .call-btn::after {
+	--translate-y: calc(-1 * var(--arrow-size));
+
+	content: '';
+	border: var(--arrow-size) solid transparent;
+	border-bottom-color: var(--tooltip-color);
 }
 
 .messaging .header > *:first-child {
@@ -119,6 +179,67 @@
 	color: rgb(220, 221, 222);
 	font-size: 16px;
 	margin-left: 4px;
+}
+
+.messaging .body .file-container {
+	background-color: hsl(223, 7%, 20%);
+	width: max-content;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.3em;
+
+	padding: 0.75em 1em;
+	border-radius: 0.3em;
+}
+
+.messaging .body .file-container .file-icon {
+	flex-shrink: 0;
+	width: 30px;
+	height: 40px;
+	margin-right: 8px;
+}
+
+.messaging .body .file-container .file-info-container {
+	display: flex;
+	flex-direction: column;
+	/* align-items: center; */
+}
+
+.messaging .body .file-container .file-info-container .file-name {
+	text-decoration: none;
+	color: hsl(197, 100%, 47.8%);
+}
+
+.messaging .body .file-container .file-info-container .file-size {
+	color: hsl(0, 0%, 47.8%);
+	font-size: 14px;
+}
+
+.messaging .body .file-container .file-info-container .file-name:hover {
+	text-decoration: underline;
+}
+
+.messaging .body .file-container .file-download-icon {
+	flex-shrink: 0;
+	width: 24px;
+	height: 24px;
+	margin-right: 8px;
+
+	text-decoration: none;
+	color: hsl(0, 0%, 70%);
+
+	text-align: center;
+	font-size: 20px;
+}
+
+.messaging .body .file-container .file-download-icon:hover {
+	color: hsl(0, 0%, 90%);
+}
+
+.messaging .body .file-container .file-download-icon i {
+	margin-left: 0.5em;
 }
 
 .messaging .footer input {

@@ -5,6 +5,7 @@ const template = await createTemplate('users');
 import friends from '../friends/friends.js';
 import findFriends from '../find-friends/find-friends.js';
 import guilds from '../guilds/guilds.js';
+import config from '../../config/config.js';
 
 const component = {
 	template: template,
@@ -26,7 +27,19 @@ const component = {
 			return 'tab-' + this.currentTab.toLowerCase();
 		},
 	},
-	methods: {},
+	methods: {
+		logout() {
+			// await fetch(`${config['frontend-addr']}/logout`, {
+			// 	method: 'POST',
+			// 	body: formData,
+			// 	mode: 'cors',
+			// 	headers: new Headers({
+			// 		'Access-Control-Allow-Origin': '*',
+			// 	}),
+			// });
+			window.location.href = `${config['frontend-addr']}/logout`;
+		},
+	},
 };
 
 export default component;

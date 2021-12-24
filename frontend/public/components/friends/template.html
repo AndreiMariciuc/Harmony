@@ -1,8 +1,25 @@
 <div>
-	<div v-for="user in pendingUsersList" :key="user.id">
-		<p>{{ user.username }}</p>
-		<button @click="rejectUser(user.id)">Reject</button>
-		<button @click="acceptUser(user.id)">Accept</button>
+	<div v-show="pendingUsersList.length > 0" class="friend-request-container">
+		<div class="header" @click="toggleFriendRequests()">
+			<h2>Friend Requests ({{ pendingUsersList.length }})</h2>
+			<span v-show="!friendRequests"
+				><i class="fa fa-caret-down" aria-hidden="true"></i
+			></span>
+			<span v-show="friendRequests"
+				><i class="fa fa-caret-up" aria-hidden="true"></i
+			></span>
+		</div>
+		<div :class="['friend-requests-wrapper', { active: friendRequests }]">
+			<div v-for="user in pendingUsersList" :key="user.id" class="request">
+				<div class="reject-btn" @click="rejectUser(user.id)">
+					<i class="fa fa-times" aria-hidden="true"></i>
+				</div>
+				<label>{{ user.username }}</label>
+				<div class="accept-btn" @click="acceptUser(user.id)">
+					<i class="fa fa-check" aria-hidden="true"></i>
+				</div>
+			</div>
+		</div>
 	</div>
 
 	<div class="friends-container">

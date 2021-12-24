@@ -23,6 +23,7 @@ const component = {
 			image: null,
 			debouncer: null,
 			needToScroll: false,
+			keepTo: null,
 		};
 	},
 	mounted() {
@@ -40,13 +41,15 @@ const component = {
 		});
 
 		this.debouncer = debounce(_ => {
-			const lastMessage = this.$refs.body?.lastElementChild;
+			// const lastMessage = this.$refs.body?.lastElementChild;
+			const lastMessage = document.getElementById(this.keepTo);
 			console.log('scroll');
 
 			if (lastMessage) {
 				lastMessage.scrollIntoView();
+				this.keepTo = null;
 			}
-		}, 250);
+		}, 1);
 
 		this.$nextTick(_ => {
 			console.log('ref', this.$refs.body);
@@ -55,6 +58,7 @@ const component = {
 				this.$refs.body.addEventListener('scroll', e => {
 					if (this.$refs.body.scrollTop <= 0) {
 						console.log('need to fetch !');
+						this.keepTo = this.$refs.body.firstElementChild.id;
 						this.getMessages(this.messages.length);
 					}
 				});
@@ -64,6 +68,10 @@ const component = {
 	updated() {
 		// this.scrollToElement();
 		if (!this.$refs.body) return;
+		if (this.keepTo) {
+			this.debouncer();
+			return;
+		}
 		if (!this.needToScroll) return;
 
 		console.log('scroll');
@@ -176,6 +184,7 @@ const component = {
 			const currImage = event.target.files[0];
 			this.image = currImage;
 			this.photoState = true;
+			this.needToScroll = true;
 		},
 		joinCall() {
 			window.open(
@@ -201,15 +210,20 @@ const component = {
 			if (url == null) return false;
 			const ext = url.split('.').pop().toLowerCase();
 
-			const imgs = ['png', 'jpeg', 'gif', 'jpg'];
-			return imgs.includes(ext);
+			return config.imgs.includes(ext);
 		},
 		isVideo(url) {
 			if (url == null) return false;
 			const ext = url.split('.').pop().toLowerCase();
 
-			const vids = ['mp4', 'mp3'];
-			return vids.includes(ext);
+			return config.vids.includes(ext);
+		},
+		isFile(url) {
+			if (url == null) return false;
+			if (this.isImage(url)) return false;
+			if (this.isVideo(url)) return false;
+
+			return true;
 		},
 		scrollToElement(options) {
 			this.debouncer();
@@ -223,6 +237,46 @@ const component = {
 			// console.log(event);
 			event.target.style.width = 'auto';
 			event.target.style.height = 'auto';
+		},
+		humanFileSize(bytes, si = false, dp = 1) {
+			const thresh = si ? 1000 : 1024;
+
+			if (Math.abs(bytes) < thresh) {
+				return bytes.toFixed(dp) + ' B';
+			}
+
+			const units = si
+				? ['kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
+				: ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'];
+			let u = -1;
+			const r = 10 ** dp;
+
+			do {
+				bytes /= thresh;
+				++u;
+			} while (
+				Math.round(Math.abs(bytes) * r) / r >= thresh &&
+				u < units.length - 1
+			);
+
+			return bytes.toFixed(dp) + ' ' + units[u];
+		},
+		async getFileSize(msg) {
+			if (msg.imageUrl == null) return;
+
+			const response = await fetch(
+				`${config['frontend-addr']}/img/data/${msg.imageUrl.split('/').pop()}`,
+				{
+					method: 'HEAD',
+				}
+			);
+
+			msg._filesize = this.humanFileSize(
+				parseInt(response.headers.get('content-length'), 10),
+				true,
+				2
+			);
+			msg._metadataloaded = true;
 		},
 	},
 };

@@ -1,5 +1,11 @@
 .preview img {
-	max-height: 7rem;
+	max-height: 10rem;
+	max-width: 10rem;
+
+	/* width: 100%;
+	height: auto; */
+
+	padding: 0 1em;
 }
 
 .preview .img-wrapper {

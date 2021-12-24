@@ -1,6 +1,9 @@
 import { createApp } from './vue.js';
 
 const socket = io();
+socket.on('invalid-session', _ => {
+	location.reload();
+});
 
 const app = createApp({
 	data() {

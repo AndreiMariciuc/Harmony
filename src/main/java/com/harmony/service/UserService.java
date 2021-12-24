@@ -10,6 +10,9 @@ import java.util.List;
 public interface UserService {
     void save(UserDto user) throws UserRegisterException;
 
+    UserDto findByName(String name);
+    UserDto findByEmail(String email);
+
     UserDto findByNameAndPassword(UserDto user) throws UserSignInException;
 
     UserDto findById(Long id) throws UserNotFoundException;

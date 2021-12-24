@@ -19,8 +19,8 @@ const PORT = process.env.PORT || config.PORT;
 
 // Initializari
 const options = {
-	key: fs.readFileSync('key.pem'),
-	cert: fs.readFileSync('cert.pem'),
+	key: fs.readFileSync('privkey.pem'),
+	cert: fs.readFileSync('fullchain.pem'),
 };
 
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
@@ -31,13 +31,19 @@ const io = initSocketServer(httpServer);
 
 // Configurari
 app.use(cors());
-app.use(express.static('public'));
+app.use(express.static('public', { dotfiles: 'allow' }));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.use(sessionCreationMiddleware);
 app.use('/call', callRouter);
 app.use('/img', imgRouter);
+app.get('/logout', (req, res) => {
+	req.session.destroy(_ => {
+		console.log('haha', req.session);
+		res.redirect('/');
+	});
+});
 app.use(sessionVerificationMiddleware);
 app.use('/', redirects);
 

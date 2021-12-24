@@ -62,3 +62,34 @@
 	background-color: hsl(0, 0%, 50%);
 	color: hsl(0, 0%, 100%);
 }
+
+.users .settings-container {
+	flex: 1 0 3em;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.users .settings-container .logout-btn {
+	--text-color: hsl(1, 83%, 58%);
+	--bg-color: transparent;
+	padding: 0.5em 1em;
+	margin: 0.3em;
+
+	cursor: pointer;
+
+	background-color: var(--bg-color);
+	color: var(--text-color);
+	font-weight: bold;
+
+	border: 1px solid hsl(1, 83%, 58%);
+	border-radius: 0.5em;
+
+	transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out;
+}
+
+.users .settings-container .logout-btn:hover {
+	--text-color: hsl(223, 7%, 20%);
+	--bg-color: hsl(1, 83%, 58%);
+}
