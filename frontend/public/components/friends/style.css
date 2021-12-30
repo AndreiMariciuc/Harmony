@@ -165,6 +165,8 @@
 	padding: 0.5em 0;
 
 	color: hsl(0, 0%, 50%);
+
+	position: relative;
 }
 
 .users .component .friends-wrapper .friend:hover {
@@ -181,4 +183,56 @@
 
 .users .component .friends-wrapper .friend label {
 	pointer-events: none;
+}
+
+.users .component .friends-wrapper .friend::before,
+.users .component .friends-wrapper .friend::after {
+	--scale: 0;
+	--tooltip-color: hsl(216, 7%, 14%);
+	--arrow-size: 6px;
+
+	position: absolute;
+
+	/* bottom: -0.25rem; */
+	top: 100%;
+	left: 50%;
+
+	transform: translateX(-50%) translateY(var(--translate-y, 0))
+		scale(var(--scale));
+	transition: transform 70ms ease-in-out;
+	transform-origin: top center;
+
+	z-index: 1000;
+
+	pointer-events: none;
+}
+
+.users .component .friends-wrapper .friend::before {
+	--translate-y: calc(var(--arrow-size));
+
+	content: attr(data-tooltip);
+	padding: 0.5em 1em;
+
+	border-radius: 0.3rem;
+	text-align: center;
+	width: max-content;
+	height: max-content;
+
+	background-color: var(--tooltip-color);
+	color: hsl(0, 0%, 80%);
+	user-select: none;
+	font-weight: bold;
+}
+
+.users .component .friends-wrapper .friend:hover::before,
+.users .component .friends-wrapper .friend:hover::after {
+	--scale: 1;
+}
+
+.users .component .friends-wrapper .friend::after {
+	--translate-y: calc(-1 * var(--arrow-size));
+
+	content: '';
+	border: var(--arrow-size) solid transparent;
+	border-bottom-color: var(--tooltip-color);
 }

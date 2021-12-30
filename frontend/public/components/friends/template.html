@@ -29,6 +29,7 @@
 				v-for="user in friendsList"
 				:key="user.id"
 				:class="['friend', { active: selectedUser?.id == user.id}]"
+				data-tooltip="Click to start chatting!"
 				@click="selectUser(user)"
 			>
 				<label>{{ user.username }}</label>
