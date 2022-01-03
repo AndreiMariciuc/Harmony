@@ -1,3 +1,238 @@
-.users .friend:hover {
-    cursor: pointer;
+.users .component > div {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+
+	overflow-y: auto;
+}
+
+.users .component .friend-request-container {
+	margin: 1em 0;
+}
+
+.users .component .friend-request-container .header {
+	cursor: pointer;
+
+	margin-top: 0.5rem;
+	padding: 0 0.5rem;
+
+	display: flex;
+	align-items: center;
+	/* justify-content: center; */
+}
+
+.users .component .friend-request-container .header span {
+	margin-left: auto;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.users .component .friend-request-container .header,
+.users .component .friend-request-container .header h2 {
+	color: hsl(0, 0%, 90%);
+	font-size: 16px;
+
+	user-select: none;
+}
+
+.users .component .friend-request-container .header:hover,
+.users .component .friend-request-container .header:hover h2 {
+	color: hsl(0, 0%, 100%);
+}
+
+.users .component .friend-requests-wrapper {
+	display: flex;
+	flex-direction: column;
+
+	gap: 0.3rem;
+
+	margin: 0.3em 0;
+
+	max-height: 0;
+	overflow: hidden;
+	--scale: 0;
+	transform-origin: top;
+	transform: scale(1, var(--scale));
+	transition: transform 0.2s ease-in, max-height 0.2s ease-out;
+}
+
+.users .component .friend-requests-wrapper.active {
+	--scale: 1;
+	max-height: 100%;
+	transition: transform 0.2s ease-out, max-height 0.2s ease-in;
+}
+
+.users .component .friend-requests-wrapper .request {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	border-radius: 0.25em;
+	margin: 0 0.3em;
+	padding: 0.5em 1em;
+
+	color: hsl(0, 0%, 50%);
+}
+
+.users .component .friend-requests-wrapper .request *:nth-child(2) {
+	flex: 1;
+	text-align: center;
+}
+
+.users .component .friend-requests-wrapper .request *:last-child {
+	margin-left: auto;
+}
+
+.users .component .friend-requests-wrapper .request:hover {
+	background-color: hsl(0, 0%, 30%);
+	color: hsl(0, 0%, 70%);
+}
+
+.users .component .friend-requests-wrapper .request .reject-btn {
+	--text-color: hsl(1, 83%, 58%);
+	--bg-color: transparent;
+	padding: 0.15em 0.5em;
+	/* margin: 0.3em; */
+
+	cursor: pointer;
+
+	background-color: var(--bg-color);
+	color: var(--text-color);
+	font-weight: bold;
+
+	border: 1px solid hsl(1, 83%, 58%);
+	border-radius: 0.4em;
+
+	transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out;
+}
+
+.users .component .friend-requests-wrapper .request .reject-btn:hover {
+	--text-color: hsl(223, 7%, 20%);
+	--bg-color: hsl(1, 83%, 58%);
+}
+
+.users .component .friend-requests-wrapper .request .accept-btn {
+	--text-color: hsl(152, 69%, 31%);
+	--bg-color: transparent;
+	padding: 0.15em 0.5em;
+	/* margin: 0.3em; */
+
+	cursor: pointer;
+
+	background-color: var(--bg-color);
+	color: var(--text-color);
+	font-weight: bold;
+
+	border: 1px solid hsl(152, 69%, 31%);
+	border-radius: 0.4em;
+
+	transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out;
+}
+
+.users .component .friend-requests-wrapper .request .accept-btn:hover {
+	--text-color: hsl(223, 7%, 20%);
+	--bg-color: hsl(152, 69%, 31%);
+}
+
+.users .component .friends-container h2 {
+	/* rgb(142, 146, 151); */
+	color: hsl(0, 0%, 90%);
+	font-size: 16px;
+	margin-left: 0.5rem;
+	margin-top: 0.5rem;
+}
+
+.users .component .friends-wrapper {
+	display: flex;
+	flex-direction: column;
+
+	gap: 0.15rem;
+
+	margin: 0.3em 0;
+}
+
+.users .component .friends-wrapper .friend {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	border-radius: 0.25em;
+	margin: 0 0.3em;
+	padding: 0.5em 0;
+
+	color: hsl(0, 0%, 50%);
+
+	position: relative;
+}
+
+.users .component .friends-wrapper .friend:hover {
+	cursor: pointer;
+
+	background-color: hsl(0, 0%, 30%);
+	color: hsl(0, 0%, 70%);
+}
+
+.users .component .friends-wrapper .friend.active {
+	background-color: hsl(0, 0%, 50%);
+	color: hsl(0, 0%, 100%);
+}
+
+.users .component .friends-wrapper .friend label {
+	pointer-events: none;
+}
+
+.users .component .friends-wrapper .friend::before,
+.users .component .friends-wrapper .friend::after {
+	--scale: 0;
+	--tooltip-color: hsl(216, 7%, 14%);
+	--arrow-size: 6px;
+
+	position: absolute;
+
+	/* bottom: -0.25rem; */
+	top: 100%;
+	left: 50%;
+
+	transform: translateX(-50%) translateY(var(--translate-y, 0))
+		scale(var(--scale));
+	transition: transform 70ms ease-in-out;
+	transform-origin: top center;
+
+	z-index: 1000;
+
+	pointer-events: none;
+}
+
+.users .component .friends-wrapper .friend::before {
+	--translate-y: calc(var(--arrow-size));
+
+	content: attr(data-tooltip);
+	padding: 0.5em 1em;
+
+	border-radius: 0.3rem;
+	text-align: center;
+	width: max-content;
+	height: max-content;
+
+	background-color: var(--tooltip-color);
+	color: hsl(0, 0%, 80%);
+	user-select: none;
+	font-weight: bold;
+}
+
+.users .component .friends-wrapper .friend:hover::before,
+.users .component .friends-wrapper .friend:hover::after {
+	--scale: 1;
+}
+
+.users .component .friends-wrapper .friend::after {
+	--translate-y: calc(-1 * var(--arrow-size));
+
+	content: '';
+	border: var(--arrow-size) solid transparent;
+	border-bottom-color: var(--tooltip-color);
 }

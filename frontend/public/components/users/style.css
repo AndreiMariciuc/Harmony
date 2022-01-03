@@ -1,0 +1,95 @@
+.users > div {
+	display: flex;
+	flex-direction: column;
+
+	height: 100%;
+}
+
+.users > div .component {
+	flex: 1 1 100%;
+	position: relative;
+	/* border-top: 1px solid gray; */
+	/* box-shadow: 0 -1px 2px hsl(0, 0%, 10%); */
+}
+
+.users .tabs-container {
+	max-height: 3em;
+	flex: 1 0 3em;
+
+	width: 100%;
+
+	display: flex;
+
+	box-shadow: 0px 1px 2px hsl(0, 0%, 10%);
+}
+
+.users .tabs-container .tabs-wrapper {
+	flex: 1;
+	display: flex;
+	gap: 0.15em;
+
+	margin: 0.5em 0.15em;
+}
+
+.users .tabs-container .tabs-wrapper .tab-button {
+	padding: 0.3em 0.3em;
+	/* border: 1px solid #ccc; */
+	/* background: #f0f0f0; */
+	cursor: pointer;
+	margin-bottom: -1px;
+	margin-right: -1px;
+
+	flex: 0 1 8em;
+
+	background: transparent;
+	color: hsl(0, 0%, 50%);
+
+	font-weight: bold;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 0.5em;
+}
+
+.users .tabs-container .tabs-wrapper .tab-button:hover {
+	/* background: #e0e0e0; */
+	background-color: hsl(0, 0%, 30%);
+	color: hsl(0, 0%, 80%);
+}
+
+.users .tabs-container .tabs-wrapper .tab-button.active {
+	background-color: hsl(0, 0%, 50%);
+	color: hsl(0, 0%, 100%);
+}
+
+.users .settings-container {
+	flex: 1 0 3em;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.users .settings-container .logout-btn {
+	--text-color: hsl(1, 83%, 58%);
+	--bg-color: transparent;
+	padding: 0.5em 1em;
+	margin: 0.3em;
+
+	cursor: pointer;
+
+	background-color: var(--bg-color);
+	color: var(--text-color);
+	font-weight: bold;
+
+	border: 1px solid hsl(1, 83%, 58%);
+	border-radius: 0.5em;
+
+	transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out;
+}
+
+.users .settings-container .logout-btn:hover {
+	--text-color: hsl(223, 7%, 20%);
+	--bg-color: hsl(1, 83%, 58%);
+}

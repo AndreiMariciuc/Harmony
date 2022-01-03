@@ -1,9 +1,28 @@
 <div class="find-friends-container">
-	<input class="search-bar" v-model="likeUser" placeholder="Scrie un nume !" />
-	<div class="friend-suggestion" v-for="user in userList" :key="user.id">
-		<label class="friend-name">{{ user.username }}</label>
-		<button class="add-friend-btn" @click="sendFriendRequest(user.id)">
-			Add friend!
-		</button>
+	<div class="search-container">
+		<h2>Search friends</h2>
+		<div class="input-wrapper search-bar">
+			<input v-model="likeUser" placeholder="Scrie un nume !" />
+			<span class="search-icon"
+				><i class="fa fa-search" aria-hidden="true"></i
+			></span>
+		</div>
+	</div>
+	<div class="friend-suggestion-wrapper">
+		<div
+			v-for="user in userList"
+			:key="user.id"
+			class="friend-suggestion"
+			data-tooltip="Click to add!"
+			@click="sendFriendRequest(user.id)"
+		>
+			<label class="friend-name">{{ user.username }}</label>
+			<!-- <span @click="sendFriendRequest(user.id)"
+				><i class="fa fa-plus-square-o" aria-hidden="true"></i
+			></span> -->
+			<!-- <button class="add-friend-btn" @click="sendFriendRequest(user.id)">
+				Add friend!
+			</button> -->
+		</div>
 	</div>
 </div>

@@ -6,7 +6,13 @@
 </div>
 <div class="preview" v-else>
 	<div class="img-wrapper">
-		<img :src="generatePreview" />
+		<img
+			@load="updateImage($event)"
+			v-if="isImage(image.name)"
+			:src="generatePreview"
+			style="width: auto; height: 10rem; max-height: 10rem; max-width: 10rem"
+		/>
+		<img v-else src="/res/file.svg" style="max-height: 3rem" />
 		<div class="x-btn" @click="deleteImage">
 			<div class="x-wrapper"></div>
 		</div>

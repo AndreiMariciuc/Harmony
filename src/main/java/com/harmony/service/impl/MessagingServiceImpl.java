@@ -36,7 +36,7 @@ public class MessagingServiceImpl implements MessagingService {
     @Override
     public List<MessageDto> getPrivateMessages(Long user1Id, Long user2Id, int startMessageIndex) {
         return messagingNativeQueryRepository.
-                getPrivateMessages(user1Id, user2Id, startMessageIndex, 20).stream()
+                getPrivateMessages(user1Id, user2Id, startMessageIndex, 30).stream()
                 .map(MessageMapper::defaultMapping)
                 .collect(Collectors.toList());
     }

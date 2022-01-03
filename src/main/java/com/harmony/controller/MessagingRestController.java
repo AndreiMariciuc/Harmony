@@ -39,6 +39,8 @@ public class MessagingRestController {
         String error = null;
         List<MessageDto> data = null;
 
+        System.out.println(startMessageIndex);
+
         try {
             data = messagingService.getPrivateMessages(user1Id, user2Id, startMessageIndex);
         } catch (Exception e) {

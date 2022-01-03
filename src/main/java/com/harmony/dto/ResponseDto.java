@@ -8,6 +8,6 @@ import lombok.RequiredArgsConstructor;
 @AllArgsConstructor
 @RequiredArgsConstructor
 public class ResponseDto {
-    private String error;
+    private Object error;
     private Object data;
 }

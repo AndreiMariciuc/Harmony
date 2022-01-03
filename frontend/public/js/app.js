@@ -1,6 +1,9 @@
 import { createApp } from './vue.js';
 
 const socket = io();
+socket.on('invalid-session', _ => {
+	location.reload();
+});
 
 const app = createApp({
 	data() {
@@ -27,7 +30,7 @@ const app = createApp({
 	},
 	template: `
         <messaging class="messaging" :socket="socket" :conversation="activeConversation" :user="user"></messaging>
-        <users class="users" :socket="socket" @user-selected="handleUserSelected"></users>
+        <users class="users" :socket="socket" @user-selected="handleUserSelected" :conversation="activeConversation"></users>
     `,
 });
 

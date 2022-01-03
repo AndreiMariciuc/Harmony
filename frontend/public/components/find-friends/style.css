@@ -1,43 +1,210 @@
-.users .friend-suggestion {
+.users .component > div {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+
+	overflow-y: auto;
+}
+
+.users .find-friends-container {
 	display: flex;
+	flex-direction: column;
+	margin: 0.5em 0;
+}
+
+.users .find-friends-container .search-container {
+	flex: 1 0 6em;
+
+	display: flex;
+	flex-direction: column;
+	/* align-items: center;*/
+	/* justify-content: center; */
+	gap: 0.2em;
+
+	margin: 0 0.3em;
+	padding: 0.5em 0.5em;
+
+	background: hsl(216, 7%, 14%);
+	color: hsl(0, 0%, 40%);
+	border-radius: 0.6em;
+}
+
+.users .find-friends-container .search-container h2 {
+	color: hsl(0, 0%, 60%);
+	font-size: 16px;
+	font-weight: bold;
+
+	user-select: none;
+
+	/* margin-bottom: 0.3em; */
+}
+
+.users .find-friends-container .search-container .search-bar {
 	width: 100%;
+	margin-top: auto;
+	margin-bottom: auto;
 
-	padding: 0.5em 0.1em;
+	position: relative;
+}
 
-	justify-content: center;
+.users .find-friends-container .search-container .search-bar input {
+	width: 100%;
+	height: 100%;
+
+	background: hsl(218, 8%, 27%);
+	color: hsl(0, 0%, 80%);
+
+	border: none;
+	border-radius: 0.6em;
+	padding: 0.5em 0.75em;
+	padding-right: 1.4em;
+
+	font-size: 16px;
+	font-family: 'myfont', 'Arial';
+
+	box-shadow: 0 0 3px 2px hsl(220, 8%, 23%);
+}
+
+.users .find-friends-container .search-container .search-bar input:focus {
+	border: none;
+	outline: none;
+}
+
+.users .find-friends-container .search-container .search-bar .search-icon {
+	position: absolute;
+
+	top: 0;
+	bottom: 0;
+	right: 0.4em;
+
+	display: flex;
 	align-items: center;
+	justify-content: center;
 }
 
-.users .friend-suggestion:hover {
+.users .find-friends-container .friend-suggestion-wrapper {
+	flex: 1 1 100%;
+
+	display: flex;
+	flex-direction: column;
+
+	gap: 0.15rem;
+
+	margin: 1em 0;
+}
+
+.users .find-friends-container .friend-suggestion-wrapper .friend-suggestion {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	border-radius: 0.25em;
+	margin: 0 0.3em;
+	padding: 0.5em 0;
+
+	color: hsl(0, 0%, 50%);
+
+	position: relative;
+}
+
+.users
+	.find-friends-container
+	.friend-suggestion-wrapper
+	.friend-suggestion:hover {
 	cursor: pointer;
-	background-color: rgba(79, 84, 92, 0.16);
+
+	background-color: hsl(0, 0%, 30%);
+	color: hsl(0, 0%, 90%);
 }
 
-.users .search-bar {
-	width: 100%;
+.users
+	.find-friends-container
+	.friend-suggestion-wrapper
+	.friend-suggestion::before,
+.users
+	.find-friends-container
+	.friend-suggestion-wrapper
+	.friend-suggestion::after {
+	--scale: 0;
+	--tooltip-color: hsl(216, 7%, 14%);
+	--arrow-size: 6px;
+
+	position: absolute;
+
+	/* bottom: -0.25rem; */
+	top: 100%;
+	left: 50%;
+
+	transform: translateX(-50%) translateY(var(--translate-y, 0))
+		scale(var(--scale));
+	transition: transform 70ms ease-in-out;
+	transform-origin: top center;
+
+	z-index: 1000;
+
+	pointer-events: none;
+}
+
+.users
+	.find-friends-container
+	.friend-suggestion-wrapper
+	.friend-suggestion::before {
+	--translate-y: calc(var(--arrow-size));
+
+	content: attr(data-tooltip);
+	padding: 0.5em 1em;
+
+	border-radius: 0.3rem;
+	text-align: center;
+	width: max-content;
+	height: max-content;
+
+	background-color: var(--tooltip-color);
+	color: hsl(0, 0%, 80%);
+	user-select: none;
+	font-weight: bold;
+}
+
+.users
+	.find-friends-container
+	.friend-suggestion-wrapper
+	.friend-suggestion:hover::before,
+.users
+	.find-friends-container
+	.friend-suggestion-wrapper
+	.friend-suggestion:hover::after {
+	--scale: 1;
+}
+
+.users
+	.find-friends-container
+	.friend-suggestion-wrapper
+	.friend-suggestion::after {
+	--translate-y: calc(-1 * var(--arrow-size));
+
+	content: '';
+	border: var(--arrow-size) solid transparent;
+	border-bottom-color: var(--tooltip-color);
 }
 
 .users .friend-suggestion .friend-name {
-	flex: 1 1 70%;
+	flex: 1;
 
 	display: flex;
 	justify-content: center;
 	align-items: center;
 
-	color: #dcddde;
-
 	cursor: inherit;
+
+	user-select: none;
 }
 
-.users .friend-suggestion .add-friend-btn {
-	flex: 1 1 30%;
+/* .users .friend-suggestion .add-friend-btn {
+	margin-left: auto;
 
 	border-radius: 10%;
 
 	cursor: inherit;
-}
-
-.find-friends-container {
-	overflow-y: hidden;
-	height: 100%;
-}
+} */

@@ -18,6 +18,10 @@ function initSocketServer(httpServer) {
 
 function socketLogic(socket) {
 	const session = socket.request.session;
+	if (session.userId == null) {
+		socket.emit('invalid-session');
+		return;
+	}
 
 	socket.join(session.userId);
 
@@ -92,12 +96,15 @@ function socketLogic(socket) {
 		io.to(session.userId).to(friendId).emit('fetch-friends');
 	});
 
-	socket.on('get-messages', async ({ conversation }, cb) => {
+	socket.on('get-messages', async ({ conversation, startIndex }, cb) => {
 		if (conversation == null) return;
 
 		const id = session.userId;
 		const [err, data] = await backend.get(
-			`/messages/${id}/@me/${conversation.id}`
+			`/messages/${id}/@me/${conversation.id}`,
+			{
+				startMessageIndex: startIndex,
+			}
 		);
 		cb(data);
 	});
@@ -146,6 +153,11 @@ function socketLogic(socket) {
 
 		const numberOfClients = room.size;
 		room.disconnect(id);
+
+		if (room.changeOwner()) {
+			socket.broadcast.to(roomId).emit('change_owner');
+		}
+
 		socket.leave(roomId);
 
 		console.log(`User ${id} left the room ${room.id}`);
