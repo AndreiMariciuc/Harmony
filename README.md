@@ -1,4 +1,4 @@
-# Harmony - a chat app opposite to Discord :) 
+# Harmony - a chat app unlike DISCORD :) 
 
 This is a real-time chat application built using Node.js, Socket.io, Vue.js, WebRTC and Spring Boot.
 The app allows users to send and receive messages, files and videos in real-time and also to 
