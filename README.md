@@ -1,4 +1,5 @@
-# let be Harmony as H - a chat app, such that H != Discord :) 
+# Harmony
+## let be H = Harmony - a chat app, such that H != Discord :) 
 
 This is a real-time chat application built using Node.js, Socket.io, Vue.js, WebRTC and Spring Boot.
 The app allows users to send and receive messages, files and videos in real-time and also to 
